@@ -1,4 +1,4 @@
-import 'package:ecommerce_route/ui/screens/auth/login_screen.dart';
+import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 

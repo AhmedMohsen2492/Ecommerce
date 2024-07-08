@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   TextEditingController controller ;
   TextInputType type;
   IconButton? suffix ;
+  String? Function(String?)? validator ;
 
   CustomTextFormField({
     required this.hintText,
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     required this.type,
     this.suffix,
+    this.validator,
 });
 
   @override
@@ -22,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: type,
       obscureText: isPassword,
+      validator: validator,
       style: TextStyle(
         color: AppColors.black,
       ),
