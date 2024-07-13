@@ -6,20 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginViewModel extends Cubit {
-  bool isPassword = true;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isPassword = true;
   LoginUseCase loginUseCase;
 
   LoginViewModel(this.loginUseCase) : super(BaseInitialState());
 
-  void login() {
+  void login()async{
     if (formKey.currentState!.validate()) {
       emit(BaseLoadingState());
 
-      Either<Failure,bool>  response
-      = loginUseCase.execute(emailController.text, passwordController.text);
+      Either<Failure,bool>  response = await loginUseCase.execute(emailController.text, passwordController.text);
 
       response.fold((error) {
         emit(BaseErrorState(error.errorMessage));
@@ -27,5 +26,10 @@ class LoginViewModel extends Cubit {
         emit(BaseSuccessState());
       });
     }
+  }
+
+  void showPassword(){
+    isPassword = !isPassword;
+    emit(ShowPass());
   }
 }

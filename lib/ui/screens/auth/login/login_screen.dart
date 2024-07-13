@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ecommerce_route/data/repos/auth/auth_repo_impl.dart';
 import 'package:ecommerce_route/domain/use%20cases/login_use_case.dart';
 import 'package:ecommerce_route/ui/screens/auth/login/login_view_model.dart';
@@ -9,6 +10,7 @@ import 'package:ecommerce_route/ui/utils/dialog_utils.dart';
 import 'package:ecommerce_route/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,9 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
+                Text(
                   "Welcome Back To Route",
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: AppColors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -54,22 +56,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   "Please sign in with your mail",
-                  style: TextStyle(
-                    color: AppColors.white.withOpacity(0.7),
+                  style: GoogleFonts.poppins(
+                    color: AppColors.white,
                     fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+                    fontWeight: FontWeight.w300,
+                  )
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                const Text(
+                Text(
                   "Email Address",
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: AppColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                  ),
+                  )
                 ),
                 const SizedBox(
                   height: 8,
@@ -93,51 +95,56 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Text(
+                Text(
                   "Password",
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: AppColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                  ),
+                  )
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                CustomTextFormField(
-                  hintText: "enter your Password",
-                  controller: viewModel.passwordController,
-                  type: TextInputType.visiblePassword,
-                  isPassword: viewModel.isPassword,
-                  validator: (password) {
-                    if(password!.isEmpty) {
-                      return "please enter password";
-                    }
-                    if(password.trim().length < 6){
-                      return "password should be at least 6 characters";
-                    }
-                    return null;
-                  },
-                  suffix: IconButton(
-                      onPressed: () {
-                        viewModel.isPassword = !viewModel.isPassword;
-                        setState(() {});
+                BlocBuilder(
+                  bloc: viewModel,
+                  builder: (context, state) {
+                    return  CustomTextFormField(
+                      hintText: "enter your Password",
+                      controller: viewModel.passwordController,
+                      type: TextInputType.visiblePassword,
+                      isPassword: viewModel.isPassword,
+                      validator: (password) {
+                        if(password!.isEmpty) {
+                          return "please enter password";
+                        }
+                        if(password.trim().length < 6){
+                          return "password should be at least 6 characters";
+                        }
+                        return null;
                       },
-                      icon: Icon(
-                          viewModel.isPassword ? Icons.visibility : Icons.visibility_off)),
+                      suffix: IconButton(
+                          onPressed: () {
+                            viewModel.showPassword();
+                          },
+                          icon: Icon(
+                              viewModel.isPassword ? Icons.visibility : Icons.visibility_off)
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                const Align(
+                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                     "Forget Password",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                       color: AppColors.white,
                       fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                      fontWeight: FontWeight.normal,
+                    )
                   ),
                 ),
                 const SizedBox(
@@ -152,12 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
-                  child: const Text(
+                  child:  Text(
                     "Login",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                         color: AppColors.primary,
                         fontSize: 20,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w600
+                    )
                   ),
                 ),
                 const SizedBox(
@@ -166,25 +174,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                     Text(
                       "Don't have an account?",
-                      style: TextStyle(
+                      style: GoogleFonts.poppins(
                         color: AppColors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                      ),
+                      )
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, SignUpScreen.routeName);
                       },
-                      child: const Text(
+                      child:  Text(
                         "Create Account",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: AppColors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                        ),
+                        )
                       ),
                     ),
                   ],
@@ -194,6 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         listener: (context, state) {
+          print(state);
           if(state is BaseLoadingState){
             showLoading(context);
           }else if (state is BaseSuccessState){

@@ -9,3 +9,5 @@ class BaseErrorState {
 
   BaseErrorState(this.errorMessage);
 }
+
+class ShowPass{}

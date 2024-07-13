@@ -6,7 +6,7 @@ class LoginUseCase {
   AuthRepo repo ;
   LoginUseCase(this.repo);
 
-  Either<Failure,bool> execute(String email, String password){
+  Future<Either<Failure,bool>> execute(String email, String password){
      return repo.login(email, password);
   }
 }
