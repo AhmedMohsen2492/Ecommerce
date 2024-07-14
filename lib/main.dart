@@ -1,5 +1,6 @@
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
+import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
 import 'package:ecommerce_route/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'domain/Di/di.dart';
@@ -16,11 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName : (_) => SplashScreen(),
         LoginScreen.routeName : (_) => LoginScreen(),
         SignUpScreen.routeName : (_) => SignUpScreen(),
+        MainScreen.routeName: (_) => MainScreen(),
       },
     );
   }

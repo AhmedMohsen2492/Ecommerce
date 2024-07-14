@@ -1,5 +1,6 @@
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_view_model.dart';
+import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
@@ -172,6 +173,7 @@ class SignUpScreen extends StatelessWidget {
             showLoading(context);
           }else if (state is BaseSuccessState){
             Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, MainScreen.routeName);
           }else if (state is BaseErrorState){
             Navigator.pop(context);
             showErrorDialog(context, state.errorMessage);
