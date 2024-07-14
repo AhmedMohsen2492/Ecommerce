@@ -6,7 +6,9 @@ import 'package:ecommerce_route/data/model/request/RegisterRequestBody.dart';
 import 'package:ecommerce_route/data/model/response/AuthResponse.dart';
 import 'package:ecommerce_route/domain/repos/auth/auth_repo.dart';
 import 'package:http/http.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   //https://ecommerce.routemisr.com/api/v1/auth/signup
 

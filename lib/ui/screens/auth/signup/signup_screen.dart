@@ -1,5 +1,4 @@
-import 'package:ecommerce_route/data/repos/auth/auth_repo_impl.dart';
-import 'package:ecommerce_route/domain/use%20cases/signup_use_case.dart';
+import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
@@ -13,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
   static const String routeName = "signup";
-  SignUpViewModel viewModel = SignUpViewModel(SignUpUseCase(AuthRepoImpl()));
+  SignUpViewModel viewModel = getIt();
 
   @override
   Widget build(BuildContext context) {

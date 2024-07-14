@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ecommerce_route/data/repos/auth/auth_repo_impl.dart';
+import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/domain/use%20cases/login_use_case.dart';
 import 'package:ecommerce_route/ui/screens/auth/login/login_view_model.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
@@ -21,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginViewModel viewModel = LoginViewModel(LoginUseCase(AuthRepoImpl()));
+  LoginViewModel viewModel = getIt();
 
   @override
   Widget build(BuildContext context) {
