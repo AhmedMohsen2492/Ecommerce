@@ -10,7 +10,7 @@ import 'package:ecommerce_route/domain/repos/main/data%20sources/main_online_ds.
 import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@Injectable(as: MainOnlineDS)
 class MainOnlineDsImpl extends MainOnlineDS {
   @override
   Future<Either<Failure, List<CategoryDM>>> getCategories() async {
