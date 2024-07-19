@@ -8,14 +8,15 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class MainScreenViewModel extends Cubit {
-  MainScreenViewModel() : super(MainScreenInitialState);
+  MainScreenViewModel() : super(MainScreenInitialState());
   int currentIndex = 0;
   List<Widget> tabs = [HomeTab(), CategoryTab(), FavouritesTab(), UserTab()];
 
-  changeTabs(int index) {
-    currentIndex = index;
+  set currentTab(int newIndex){
+    currentIndex = newIndex;
     emit(MainScreenInitialState());
   }
+
 }
 
 class MainScreenInitialState {}
