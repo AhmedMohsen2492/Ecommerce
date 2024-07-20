@@ -11,10 +11,7 @@ void showLoading(BuildContext context) {
           children: [
             Text(
               "Loading..",
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: 20
-              ),
+              style: TextStyle(color: AppColors.black, fontSize: 20),
             ),
             Spacer(),
             CircularProgressIndicator(

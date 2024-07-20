@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Please sign in with your mail",
                   style: GoogleFonts.poppins(
                     color: AppColors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w300,
                   )
                 ),
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Email Address",
                   style: GoogleFonts.poppins(
                     color: AppColors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   )
                 ),
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Password",
                   style: GoogleFonts.poppins(
                     color: AppColors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   )
                 ),
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Forget Password",
                     style: GoogleFonts.poppins(
                       color: AppColors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.normal,
                     )
                   ),
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Don't have an account?",
                       style: GoogleFonts.poppins(
                         color: AppColors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                       )
                     ),
@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         "Create Account",
                         style: GoogleFonts.poppins(
                           color: AppColors.white,
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                         )
                       ),

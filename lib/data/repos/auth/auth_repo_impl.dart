@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   SharedPrefUtils sharedPrefUtils;
+
   AuthRepoImpl(this.sharedPrefUtils);
 
   @override
@@ -43,17 +44,15 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, bool>> register(RegisterRequestBody body) async {
-
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
 
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       String baseUrl = "ecommerce.routemisr.com";
       String endPoints = "/api/v1/auth/signup";
       Uri url = Uri.https(baseUrl, endPoints);
-      Response response =
-          await post(url, body: body.toJson());
+      Response response = await post(url, body: body.toJson());
       Map json = jsonDecode(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(json);
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -67,7 +66,5 @@ class AuthRepoImpl extends AuthRepo {
       return Left(
           Failure("Please check your internet connection and try again later"));
     }
-
   }
-
 }
