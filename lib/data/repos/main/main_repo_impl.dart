@@ -36,4 +36,29 @@ class MainRepoImpl extends MainRepo {
       return Left(Failure("no internet connection"));
     }
   }
+
+  @override
+  Future<Either<Failure, List<CategoryDM>>> getBrands() async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.getBrands();
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(
+      String id) async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.getProductsFromSpecificBrand(id);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
 }

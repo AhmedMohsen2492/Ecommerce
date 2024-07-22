@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
-import 'package:ecommerce_route/ui/screens/main/tabs/homeTab/home_view_model.dart';
+import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
@@ -22,7 +22,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  HomeViewModel viewModel = getIt();
+  MainScreenViewModel viewModel = getIt();
 
   @override
   void initState() {
@@ -42,11 +42,20 @@ class _HomeTabState extends State<HomeTab> {
             CarouselSlider(
                 items: [
                   Image.asset(
-                    AppAssets.headphone,
+                    AppAssets.image1,
+                    fit: BoxFit.fill,
+                  ),
+                  Image.asset(
+                    AppAssets.image2,
+                    fit: BoxFit.fill,
+                  ),
+                  Image.asset(
+                    AppAssets.image3,
                     fit: BoxFit.fill,
                   ),
                 ],
                 options: CarouselOptions(
+                  autoPlay: true,
                   enlargeCenterPage: true,
                   animateToClosest: true,
                   viewportFraction: 1,
@@ -54,29 +63,13 @@ class _HomeTabState extends State<HomeTab> {
                 ),
             ),
             const SizedBox(height: 8,),
-            Row(
-              children: [
-                Text(
-                    "Categories",
-                    style: GoogleFonts.poppins(
-                        color: AppColors.darkBlue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500
-                    )
-                ),
-                const Spacer(),
-                TextButton(
-                    onPressed: (){},
-                    child: Text(
-                      "view all",
-                      style: GoogleFonts.poppins(
-                          color: AppColors.darkBlue,
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal
-                      )
-                    ),
-                ),
-              ],
+            Text(
+                "Categories",
+                style: GoogleFonts.poppins(
+                    color: AppColors.darkBlue,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                )
             ),
             SizedBox(
               height: MediaQuery.sizeOf(context).height* 0.3,
@@ -95,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
             const SizedBox(height: 8,),
             Text(
-                "Home Appliance",
+                "Fashion",
                 style: GoogleFonts.poppins(
                     color: AppColors.darkBlue,
                     fontSize: 18,

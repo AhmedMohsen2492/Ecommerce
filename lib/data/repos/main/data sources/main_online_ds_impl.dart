@@ -51,4 +51,47 @@ class MainOnlineDsImpl extends MainOnlineDS {
       return Left(Failure("something went wrong"));
     }
   }
+
+  @override
+  Future<Either<Failure, List<CategoryDM>>> getBrands() async{
+    try {
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.brands);
+      Response response = await get(url);
+      Map json = jsonDecode(response.body);
+      CategoriesResponse categoriesResponse = CategoriesResponse.fromJson(json);
+      if (response.statusCode >= 200 &&
+          response.statusCode < 300 &&
+          categoriesResponse.data?.isNotEmpty == true) {
+        return Right(categoriesResponse.data!);
+      } else {
+        return Left(Failure(categoriesResponse.message ??
+            "something went wrong please tru again later"));
+      }
+    } catch (error) {
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(String id)async {
+    try {
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.products ,{
+        "brand" : id,
+      });
+      Response response = await get(url);
+      Map json = jsonDecode(response.body);
+      ProductsResponse productsResponse = ProductsResponse.fromJson(json);
+      if (response.statusCode >= 200 &&
+          response.statusCode < 300 &&
+          productsResponse.data?.isNotEmpty == true) {
+        return Right(productsResponse.data!);
+      } else {
+        return Left(Failure(productsResponse.message ??
+            "something went wrong please tru again later"));
+      }
+    }catch(error){
+      return Left(Failure("something went wrong"));
+    }
+  }
+
 }

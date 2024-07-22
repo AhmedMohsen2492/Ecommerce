@@ -1,7 +1,6 @@
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 
 class ProductDM {
-
   num? sold;
   List<String>? images;
   List<CategoryDM>? subcategory;

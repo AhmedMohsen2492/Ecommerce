@@ -1,5 +1,4 @@
 import 'package:ecommerce_route/data/model/response/base_response.dart';
-
 import 'Metadata.dart';
 import 'product_dm.dart';
 
@@ -36,5 +35,4 @@ class ProductsResponse extends BaseResponse{
     }
     return map;
   }
-
 }

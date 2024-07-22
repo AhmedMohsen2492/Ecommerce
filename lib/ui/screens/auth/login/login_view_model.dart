@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_route/data/model/failures.dart';
-import 'package:ecommerce_route/domain/use%20cases/login_use_case.dart';
+import 'package:ecommerce_route/domain/use%20cases/authUseCases/login_use_case.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

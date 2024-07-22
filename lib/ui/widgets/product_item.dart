@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProductItem extends StatelessWidget {
   ProductDM product;
+
   ProductItem(this.product, {super.key});
 
   @override

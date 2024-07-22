@@ -7,4 +7,8 @@ abstract class MainOnlineDS {
   Future<Either<Failure, List<CategoryDM>>> getCategories();
 
   Future<Either<Failure, List<ProductDM>>> getProducts();
+
+  Future<Either<Failure, List<CategoryDM>>> getBrands();
+
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(String id);
 }

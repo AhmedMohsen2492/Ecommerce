@@ -26,7 +26,6 @@ class CategoryDM {
     category = json['category'];
   }
 
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = id;
@@ -37,5 +36,4 @@ class CategoryDM {
     map['updatedAt'] = updatedAt;
     return map;
   }
-
 }
