@@ -13,5 +13,6 @@ class AppAssets {
   static const String image1 = "assets/headphone.png";
   static const String image2 = "assets/image2.png";
   static const String image3 = "assets/image3.png";
+  static const String outOfStockImage = "assets/out_of_stock_image.jpeg";
 
 }
