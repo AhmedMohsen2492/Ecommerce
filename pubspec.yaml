@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dots_indicator: ^2.1.1
   carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.6
   flutter_bloc: ^8.1.6
@@ -43,6 +42,8 @@ dependencies:
   get_it: ^7.7.0
   shared_preferences: ^2.2.3
   cached_network_image: ^3.3.1
+  dots_indicator: ^3.0.0
+  smooth_page_indicator: ^1.2.0+3
 
 
 

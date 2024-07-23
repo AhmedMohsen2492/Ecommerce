@@ -1,6 +1,7 @@
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
+import 'package:ecommerce_route/ui/screens/productDetails/product_detail_screen.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_screen.dart';
 import 'package:ecommerce_route/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         SignUpScreen.routeName : (_) => SignUpScreen(),
         MainScreen.routeName: (_) => MainScreen(),
         ProductsOfCategoryScreen.routeName:(_)=>ProductsOfCategoryScreen(),
+        ProductDetails.routeName:(_)=> ProductDetails(),
       },
     );
   }
