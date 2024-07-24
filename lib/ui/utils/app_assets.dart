@@ -14,5 +14,7 @@ class AppAssets {
   static const String image2 = "assets/image2.png";
   static const String image3 = "assets/image3.png";
   static const String outOfStockImage = "assets/out_of_stock_image.jpeg";
+  static const String mini = "assets/mini.png";
+  static const String add = "assets/add.png";
 
 }

@@ -60,6 +60,7 @@ class ProductItem extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 30,
+
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
