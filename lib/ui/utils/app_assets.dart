@@ -16,5 +16,6 @@ class AppAssets {
   static const String outOfStockImage = "assets/out_of_stock_image.jpeg";
   static const String mini = "assets/mini.png";
   static const String add = "assets/add.png";
+  static const String inFavIcon = "assets/inFavIcon.png";
 
 }

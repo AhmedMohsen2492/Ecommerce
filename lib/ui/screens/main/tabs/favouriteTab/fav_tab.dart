@@ -1,7 +1,9 @@
+import 'package:ecommerce_route/ui/screens/main/tabs/favouriteTab/fav_view_model.dart';
 import 'package:flutter/material.dart';
 
 class FavouritesTab extends StatelessWidget {
-  const FavouritesTab({Key? key}) : super(key: key);
+  FavouritesTab({Key? key}) : super(key: key);
+  FavouriteViewModel viewModel = FavouriteViewModel();
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/ui/screens/productDetails/product_detail_screen.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../screens/main/tabs/favouriteTab/fav_view_model.dart';
 
 class ProductItem extends StatelessWidget {
   ProductDM product;
+  final bool isInCart;
+  ProductItem(this.product,this.isInCart, {super.key});
 
-  ProductItem(this.product, {super.key});
+  FavouriteViewModel favouriteViewModel = FavouriteViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,6 @@ class ProductItem extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 30,
-
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
@@ -107,14 +111,19 @@ class ProductItem extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: IconButton(
                 onPressed: () {
-                  //todo
+                  CartViewModel cartViewModel = BlocProvider.of(context);
+                  if(isInCart){
+                    cartViewModel.removeProductFromCart(product.id!,context);
+                  }else{
+                    cartViewModel.addProductToCart(product.id!,context);
+                  }
                 },
                 icon: Container(
                   decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(6000)),
-                  child: const Icon(
-                    Icons.add_rounded,
+                  child: Icon(
+                    isInCart ? Icons.remove : Icons.add_rounded,
                     color: AppColors.white,
                     size: 25.0,
                   ),
@@ -123,7 +132,7 @@ class ProductItem extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                //todo
+
               },
               child: Container(
                 padding: const EdgeInsets.all(6),

@@ -14,6 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../cart/cart_screen.dart';
+
 class ProductDetails extends StatefulWidget {
   static const String routeName = "ProductDetails";
 
@@ -49,7 +51,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                   fontWeight: FontWeight.w500,
                 )),
             const Spacer(),
-            Image.asset(AppAssets.shoppingIcon),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
+                child: Image.asset(AppAssets.shoppingIcon)),
           ],
         ),
       ),
@@ -210,7 +216,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: 12,
               ),
               Row(
                 children: [

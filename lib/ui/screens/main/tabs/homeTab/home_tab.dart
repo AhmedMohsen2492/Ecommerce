@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_route/data/model/response/cart_dm.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_screen.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
@@ -26,10 +28,11 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   MainScreenViewModel viewModel = getIt();
   ProductsOfCategoryViewModel productsOfCategoryViewModel = getIt();
-
+  late CartViewModel cartViewModel ;
   @override
   void initState() {
     super.initState();
+    cartViewModel = BlocProvider.of(context,listen: false);
     viewModel.loadCategories();
     viewModel.loadProducts();
   }
@@ -136,11 +139,26 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Widget buildProductsListView(List<ProductDM> list) {
-    return ListView.builder(
-      itemCount: list.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return ProductItem(list[index]);
+    return BlocBuilder<CartViewModel,dynamic>(
+      builder: (context, state) {
+          CartDM? cartDM = cartViewModel.cartDM;
+          return ListView.builder(
+            itemCount: list.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              var product = list[index];
+              bool isInCart = false ;
+              if(cartDM!=null && cartDM.products!=null){
+                var productsInCart = cartDM.products ;
+                for(int i=0 ; i < productsInCart!.length ; i++){
+                  if(product.id == productsInCart[i].product?.id){
+                    isInCart = true;
+                  }
+                }
+              }
+              return ProductItem(list[index],isInCart);
+            },
+          );
       },
     );
   }

@@ -1,21 +1,26 @@
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void showLoading(BuildContext context) {
   showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) {
-        return const AlertDialog(
+        return AlertDialog(
             content: Row(
           children: [
             Text(
               "Loading..",
-              style: TextStyle(color: AppColors.black, fontSize: 20),
+              style: GoogleFonts.poppins(
+                color: AppColors.primary,
+                fontSize: 18,
+              ),
             ),
             Spacer(),
             CircularProgressIndicator(
               color: AppColors.primary,
+              strokeAlign: 0.02,
             ),
           ],
         ));

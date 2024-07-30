@@ -1,15 +1,19 @@
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
+import 'package:ecommerce_route/ui/screens/cart/cart_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
 import 'package:ecommerce_route/ui/screens/productDetails/product_detail_screen.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_screen.dart';
 import 'package:ecommerce_route/ui/screens/splash/splash_screen.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'domain/Di/di.dart';
 
 void main() {
   configureDependencies();
-  runApp(const MyApp());
+  runApp(BlocProvider(
+      create: (context) => getIt<CartViewModel>(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,12 +25,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: {
-        SplashScreen.routeName : (_) => SplashScreen(),
-        LoginScreen.routeName : (_) => LoginScreen(),
-        SignUpScreen.routeName : (_) => SignUpScreen(),
+        SplashScreen.routeName: (_) => SplashScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
+        SignUpScreen.routeName: (_) => SignUpScreen(),
         MainScreen.routeName: (_) => MainScreen(),
-        ProductsOfCategoryScreen.routeName:(_)=>ProductsOfCategoryScreen(),
-        ProductDetails.routeName:(_)=> ProductDetails(),
+        ProductsOfCategoryScreen.routeName: (_) => ProductsOfCategoryScreen(),
+        ProductDetails.routeName: (_) => ProductDetails(),
+        CartScreen.routeName:(_)=> CartScreen(),
       },
     );
   }

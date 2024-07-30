@@ -3,6 +3,7 @@ import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
 import 'package:ecommerce_route/ui/widgets/error_view.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../../data/model/response/cart_dm.dart';
 import '../../../../utils/app_assets.dart';
 
 class CategoryTab extends StatefulWidget {
@@ -151,15 +153,29 @@ class _CategoryTabState extends State<CategoryTab> {
     }).toList();
   }
 
-  List<Widget> tabsViewBuilder(
-      List<CategoryDM> list, BaseSuccessState<List<ProductDM>> brandState) {
-    return list.map((brand) {
-      return ListView.builder(
-        itemCount: brandState.data!.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ProductItem(brandState.data![index]),
+  List<Widget> tabsViewBuilder(List<CategoryDM> brandsList,
+      BaseSuccessState<List<ProductDM>> brandState) {
+    return brandsList.map((brand) {
+      return BlocBuilder<CartViewModel, dynamic>(
+        builder: (context, state) {
+          return ListView.builder(
+            itemCount: brandState.data!.length,
+            itemBuilder: (context, index) {
+              CartViewModel cartViewModel = BlocProvider.of(context);
+              CartDM? cartDM = cartViewModel.cartDM;
+              var productsInCart = cartDM?.products;
+              var product = brandState.data?[index];
+              bool isInCart = false;
+              for (int i = 0; i < productsInCart!.length; i++) {
+                if (productsInCart[i].product?.id == product?.id) {
+                  isInCart = true;
+                }
+              }
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ProductItem(product!, isInCart),
+              );
+            },
           );
         },
       );

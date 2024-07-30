@@ -5,7 +5,6 @@ import 'package:ecommerce_route/ui/screens/main/tabs/userTab/user_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../domain/use cases/mainUseCases/get_all_brands_usecase.dart';
 import '../../../domain/use cases/mainUseCases/get_all_categories_usecase.dart';
 import '../../../domain/use cases/mainUseCases/get_all_products_usecase.dart';

@@ -1,8 +1,11 @@
 import 'package:ecommerce_route/domain/Di/di.dart';
+import 'package:ecommerce_route/ui/screens/cart/cart_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,6 +19,13 @@ class _MainScreenState extends State<MainScreen> {
   MainScreenViewModel viewModel = getIt();
 
   @override
+  void initState() {
+    super.initState();
+    CartViewModel cartViewModel =  BlocProvider.of(context);
+    cartViewModel.loadCart();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +33,11 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Image.asset(AppAssets.routeIcon),
             const Spacer(),
-            Image.asset(AppAssets.shoppingIcon),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
+                child: Image.asset(AppAssets.shoppingIcon)),
           ],
         ),
       ),

@@ -2,11 +2,13 @@ import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
 import 'package:ecommerce_route/ui/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../data/model/response/cart_dm.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/loading_view.dart';
@@ -25,6 +27,7 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   ProductsOfCategoryViewModel viewModel = getIt();
   CategoryDM? category;
 
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,8 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     category = ModalRoute.of(context)!.settings.arguments as CategoryDM?;
+    CartViewModel cartViewModel = BlocProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -53,14 +58,31 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
           bloc: viewModel,
           builder: (context, state) {
             if (state is BaseSuccessState<List<ProductDM>>) {
-              return Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 0.8),
-                  itemCount: state.data!.length,
-                  itemBuilder: (context, index) =>
-                      ProductItem(state.data![index]),
-                ),
+              return BlocBuilder<CartViewModel,dynamic>(
+                builder: (context, cartState) {
+                  return Expanded(
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, childAspectRatio: 0.8),
+                      itemCount: state.data!.length,
+                      itemBuilder: (context, index) {
+
+                        CartDM? cartDM = cartViewModel.cartDM;
+                        var product = state.data?[index];
+                        bool isInCart = false ;
+                        if(cartDM!=null && cartDM.products!=null){
+                          var productsInCart = cartDM?.products;
+                          for(int i=0 ; i < productsInCart!.length ; i++){
+                            if(product?.id == productsInCart[i].product?.id){
+                              isInCart = true;
+                            }
+                          }
+                        }
+                        return ProductItem(state.data![index],isInCart);
+                      },
+                    ),
+                  );
+                },
               );
             } else if (state is BaseErrorState) {
               return Column(
