@@ -1,19 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/productDetails/product_details_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
-import 'package:ecommerce_route/ui/widgets/loading_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../cart/cart_screen.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -33,6 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     viewModel = getIt();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel.loadSpecificProduct(product?.id ?? "");
+      viewModel.totalPrice = product!.price! ;
     });
   }
 
@@ -52,9 +50,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 )),
             const Spacer(),
             InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, CartScreen.routeName);
-              },
+                onTap: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
                 child: Image.asset(AppAssets.shoppingIcon)),
           ],
         ),
@@ -218,62 +216,70 @@ class _ProductDetailsState extends State<ProductDetails> {
               SizedBox(
                 height: 12,
               ),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              BlocBuilder(
+                bloc: viewModel,
+                builder: (context, state) {
+                  return Row(
                     children: [
-                      Text(
-                        "Total price",
-                        style: GoogleFonts.poppins(
-                          color: AppColors.darkBlue.withOpacity(0.6),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Total price",
+                            style: GoogleFonts.poppins(
+                              color: AppColors.darkBlue.withOpacity(0.6),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            "EGP ${viewModel.totalPrice}",
+                            style: GoogleFonts.poppins(
+                              color: AppColors.darkBlue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "EGP ${product!.price}",
-                        style: GoogleFonts.poppins(
-                          color: AppColors.darkBlue,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                      Spacer(),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                        ),
+                        decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            border: Border.all(
+                              color: AppColors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(500)),
+                        child: Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.decreaseItemCount(product!.price!);
+                                },
+                                icon: Image.asset(
+                                  AppAssets.mini,
+                                )),
+                            Text(
+                                "${viewModel.itemCount}",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: AppColors.white)),
+                            IconButton(
+                              onPressed: () {
+                                viewModel.increaseItemCount(product!.price!);
+                              },
+                              icon: Image.asset(AppAssets.add),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                  Spacer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8,),
-                    decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        border: Border.all(
-                          color: AppColors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(500)
-                    ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: (){},
-                            icon: Image.asset(
-                                AppAssets.mini,
-                            )
-                        ),
-                        Text(
-                            "0",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppColors.white
-                        )),
-                        IconButton(
-                            onPressed: (){},
-                            icon: Image.asset(AppAssets.add),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
               SizedBox(
                 height: 8,

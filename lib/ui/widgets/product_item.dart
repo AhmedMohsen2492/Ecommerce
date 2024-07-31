@@ -119,13 +119,14 @@ class ProductItem extends StatelessWidget {
                   }
                 },
                 icon: Container(
+                  padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(6000)),
                   child: Icon(
-                    isInCart ? Icons.remove : Icons.add_rounded,
+                    isInCart ? Icons.done : Icons.add_shopping_cart_sharp,
                     color: AppColors.white,
-                    size: 25.0,
+                    size: 15.0,
                   ),
                 ),
               ),

@@ -5,6 +5,9 @@ import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../shared view models/cart_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,8 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    CartViewModel cartViewModel =  BlocProvider.of(context);
+    cartViewModel.loadCart();
     Future.delayed(
-        Duration(seconds: 2),
+        Duration(seconds: 3),
       () async {
           var pref = getIt<SharedPrefUtils>();
           User? user = await pref.getUser();

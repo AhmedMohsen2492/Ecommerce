@@ -17,5 +17,7 @@ class AppAssets {
   static const String mini = "assets/mini.png";
   static const String add = "assets/add.png";
   static const String inFavIcon = "assets/inFavIcon.png";
+  static const String delete = "assets/delete.png";
+  static const String empty_cart_image = "assets/empty_cart_image.png";
 
 }

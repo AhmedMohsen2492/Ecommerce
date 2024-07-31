@@ -21,8 +21,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    CartViewModel cartViewModel =  BlocProvider.of(context);
-    cartViewModel.loadCart();
   }
 
   @override
