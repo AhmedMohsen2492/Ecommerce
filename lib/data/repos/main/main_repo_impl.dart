@@ -98,4 +98,40 @@ class MainRepoImpl extends MainRepo {
       return Left(Failure("no internet connection"));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id) async{
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.addProductToWishList(id);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList() async{
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.getLoggedUserWishList();
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id) async{
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.removeProductFromWishList(id);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
 }

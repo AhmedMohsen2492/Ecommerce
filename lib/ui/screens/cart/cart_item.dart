@@ -9,7 +9,7 @@ import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 
 class CartItem extends StatelessWidget {
-  CartProduct cartProduct;
+  CartProduct? cartProduct;
   CartItem(this.cartProduct);
 
   @override
@@ -30,7 +30,7 @@ class CartItem extends StatelessWidget {
           Expanded(
             flex: 30,
             child: CachedNetworkImage(
-                imageUrl: cartProduct.product!.imageCover!,
+                imageUrl: cartProduct?.product?.imageCover ?? "",
                 imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -64,7 +64,7 @@ class CartItem extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.35,
-                      child: Text("${cartProduct.product!.title}",
+                      child: Text("${cartProduct?.product?.title ?? ""}",
                           maxLines: 1,
                           style: GoogleFonts.poppins(
                             color: AppColors.darkBlue,
@@ -75,7 +75,7 @@ class CartItem extends StatelessWidget {
                     Spacer(),
                     InkWell(
                       onTap: () {
-                        cartViewModel.removeProductFromCart(cartProduct.product!.id!, context);
+                        cartViewModel.removeProductFromCart(cartProduct?.product?.id ?? "", context);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(6),
@@ -100,7 +100,7 @@ class CartItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text("${cartProduct.product!.brand!.name}",
+                Text("${cartProduct?.product?.brand?.name ?? ""}",
                     style: GoogleFonts.poppins(
                       color: AppColors.darkBlue,
                       fontWeight: FontWeight.normal,
@@ -109,7 +109,7 @@ class CartItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("EGP ${cartProduct.price}",
+                    Text("EGP ${cartProduct?.price ?? ""}",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           color: AppColors.darkBlue,

@@ -18,4 +18,10 @@ abstract class MainOnlineDS {
   Future<Either<Failure,CartDM>> addProductToCart(String id);
 
   Future<Either<Failure,CartDM>> removeProductsFromCart(String id);
+
+  Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList();
+
+  Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id);
+
+  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id);
 }

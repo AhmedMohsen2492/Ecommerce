@@ -6,4 +6,5 @@ abstract class EndPoints {
   static const String signin = "/api/v1/auth/signin";
   static const String brands = "/api/v1/brands";
   static const String cart = "/api/v1/cart";
+  static const String wishlist = "/api/v1/wishlist";
 }

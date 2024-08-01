@@ -30,7 +30,10 @@ class CategoryItem extends StatelessWidget {
           placeholder: (context, url) => CircularProgressIndicator(
             color: AppColors.primary,
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          errorWidget: (context, url, error) {
+            return  Icon(Icons.error_outline_outlined);
+          },
+          errorListener: (value) =>  print("Error !! => ${value}"),
         ),
         Spacer(),
         Text(

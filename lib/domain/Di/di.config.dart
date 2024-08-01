@@ -24,14 +24,15 @@ import '../../data/repos/productsOfCategory/data%20sources/products_of_category_
 import '../../data/repos/productsOfCategory/products_of_category_repo_impl.dart'
     as _i19;
 import '../../data/utils/sharedpref_utils.dart' as _i3;
-import '../../ui/screens/auth/login/login_view_model.dart' as _i32;
-import '../../ui/screens/auth/signup/signup_view_model.dart' as _i33;
-import '../../ui/screens/main/main_screen_view_model.dart' as _i35;
+import '../../ui/screens/auth/login/login_view_model.dart' as _i35;
+import '../../ui/screens/auth/signup/signup_view_model.dart' as _i37;
+import '../../ui/screens/main/main_screen_view_model.dart' as _i39;
 import '../../ui/screens/productDetails/product_details_view_model.dart'
-    as _i28;
+    as _i31;
 import '../../ui/screens/productsOfCategory/products_of_category_view_model.dart'
     as _i23;
-import '../../ui/shared%20view%20models/cart_view_model.dart' as _i34;
+import '../../ui/shared%20view%20models/cart_view_model.dart' as _i38;
+import '../../ui/shared%20view%20models/wish_list_view_model.dart' as _i36;
 import '../repos/auth/auth_repo.dart' as _i11;
 import '../repos/main/data%20sources/main_online_ds.dart' as _i5;
 import '../repos/main/main_repo.dart' as _i20;
@@ -47,15 +48,21 @@ import '../use%20cases/CartUseCase/add_product_to_cart_use_case.dart' as _i26;
 import '../use%20cases/CartUseCase/get_logged_user_cart_usecase.dart' as _i25;
 import '../use%20cases/CartUseCase/remove_product_from_cart_use_case.dart'
     as _i27;
-import '../use%20cases/mainUseCases/get_all_brands_usecase.dart' as _i29;
-import '../use%20cases/mainUseCases/get_all_categories_usecase.dart' as _i30;
-import '../use%20cases/mainUseCases/get_all_products_usecase.dart' as _i31;
+import '../use%20cases/mainUseCases/get_all_brands_usecase.dart' as _i32;
+import '../use%20cases/mainUseCases/get_all_categories_usecase.dart' as _i33;
+import '../use%20cases/mainUseCases/get_all_products_usecase.dart' as _i34;
 import '../use%20cases/mainUseCases/get_products_from_specific_brand_use_case.dart'
     as _i24;
 import '../use%20cases/productDetails/product_details_use_case.dart' as _i17;
 import '../use%20cases/productsOfCategoryUseCase/products_of_category_use_case.dart'
     as _i22;
-import 'app_module.dart' as _i36;
+import '../use%20cases/WishListUseCase/add_product_to_wish_list_use_case.dart'
+    as _i29;
+import '../use%20cases/WishListUseCase/get_logged_user_wish_list_use_case.dart'
+    as _i28;
+import '../use%20cases/WishListUseCase/remove_product_from_wish_list_use_case.dart'
+    as _i30;
+import 'app_module.dart' as _i40;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -99,31 +106,42 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i26.AddProductToCartUseCase(gh<_i20.MainRepo>()));
     gh.factory<_i27.RemoveProductFromCartUseCase>(
         () => _i27.RemoveProductFromCartUseCase(gh<_i20.MainRepo>()));
-    gh.factory<_i28.ProductDetailsViewModel>(
-        () => _i28.ProductDetailsViewModel(gh<_i17.ProductDetailsUseCase>()));
-    gh.factory<_i29.GetAllBrandsUseCase>(
-        () => _i29.GetAllBrandsUseCase(gh<_i20.MainRepo>()));
-    gh.factory<_i30.GetAllCategoriesUseCase>(
-        () => _i30.GetAllCategoriesUseCase(gh<_i20.MainRepo>()));
-    gh.factory<_i31.GetAllProductsUseCase>(
-        () => _i31.GetAllProductsUseCase(gh<_i20.MainRepo>()));
-    gh.factory<_i32.LoginViewModel>(
-        () => _i32.LoginViewModel(gh<_i15.LoginUseCase>()));
-    gh.factory<_i33.SignUpViewModel>(
-        () => _i33.SignUpViewModel(gh<_i16.SignUpUseCase>()));
-    gh.factory<_i34.CartViewModel>(() => _i34.CartViewModel(
+    gh.factory<_i28.GetLoggedUserWishListUseCase>(
+        () => _i28.GetLoggedUserWishListUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i29.AddProductToWishListUseCase>(
+        () => _i29.AddProductToWishListUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i30.RemoveProductFromWishListUseCase>(
+        () => _i30.RemoveProductFromWishListUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i31.ProductDetailsViewModel>(
+        () => _i31.ProductDetailsViewModel(gh<_i17.ProductDetailsUseCase>()));
+    gh.factory<_i32.GetAllBrandsUseCase>(
+        () => _i32.GetAllBrandsUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i33.GetAllCategoriesUseCase>(
+        () => _i33.GetAllCategoriesUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i34.GetAllProductsUseCase>(
+        () => _i34.GetAllProductsUseCase(gh<_i20.MainRepo>()));
+    gh.factory<_i35.LoginViewModel>(
+        () => _i35.LoginViewModel(gh<_i15.LoginUseCase>()));
+    gh.factory<_i36.WishListViewModel>(() => _i36.WishListViewModel(
+          gh<_i28.GetLoggedUserWishListUseCase>(),
+          gh<_i29.AddProductToWishListUseCase>(),
+          gh<_i30.RemoveProductFromWishListUseCase>(),
+        ));
+    gh.factory<_i37.SignUpViewModel>(
+        () => _i37.SignUpViewModel(gh<_i16.SignUpUseCase>()));
+    gh.factory<_i38.CartViewModel>(() => _i38.CartViewModel(
           gh<_i25.GetLoggedUserCartUseCase>(),
           gh<_i26.AddProductToCartUseCase>(),
           gh<_i27.RemoveProductFromCartUseCase>(),
         ));
-    gh.factory<_i35.MainScreenViewModel>(() => _i35.MainScreenViewModel(
-          gh<_i30.GetAllCategoriesUseCase>(),
-          gh<_i31.GetAllProductsUseCase>(),
+    gh.factory<_i39.MainScreenViewModel>(() => _i39.MainScreenViewModel(
+          gh<_i33.GetAllCategoriesUseCase>(),
+          gh<_i34.GetAllProductsUseCase>(),
           gh<_i24.GetProductsFromSpecificBrandUseCase>(),
-          gh<_i29.GetAllBrandsUseCase>(),
+          gh<_i32.GetAllBrandsUseCase>(),
         ));
     return this;
   }
 }
 
-class _$AppModule extends _i36.AppModule {}
+class _$AppModule extends _i40.AppModule {}

@@ -3,6 +3,7 @@ import 'package:ecommerce_route/data/utils/sharedpref_utils.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/main_screen.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     CartViewModel cartViewModel =  BlocProvider.of(context);
+    WishListViewModel wishListViewModel = BlocProvider.of(context);
+    wishListViewModel.loadWishList();
     cartViewModel.loadCart();
     Future.delayed(
         Duration(seconds: 3),

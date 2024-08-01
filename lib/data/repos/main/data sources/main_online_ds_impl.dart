@@ -7,6 +7,7 @@ import 'package:ecommerce_route/data/model/response/ProductsResponse.dart';
 import 'package:ecommerce_route/data/model/response/cart_dm.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
+import 'package:ecommerce_route/data/model/response/wish_list_response.dart';
 import 'package:ecommerce_route/data/utils/end_points.dart';
 import 'package:ecommerce_route/domain/repos/main/data%20sources/main_online_ds.dart';
 import 'package:http/http.dart';
@@ -80,8 +81,7 @@ class MainOnlineDsImpl extends MainOnlineDS {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(
-      String id) async {
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(String id) async {
     try {
       Uri url = Uri.https(EndPoints.baseUrl, EndPoints.products, {
         "brand": id,
@@ -151,11 +151,74 @@ class MainOnlineDsImpl extends MainOnlineDS {
       Uri url = Uri.parse("https://${EndPoints.baseUrl}${EndPoints.cart}/$id");
       Response response = await delete(url, headers: {"token": token});
       Map json = jsonDecode(response.body);
+      CartResponse cartResponse = CartResponse.fromJson(json);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return getLoggedUserCart();
+        return Right(cartResponse.data!);
       } else {
         return Left(Failure(
             json["message"] ?? "something went wrong please tru again later"));
+      }
+    } catch (e) {
+      print("Exception $e");
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList() async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.wishlist);
+      Response response = await get(url, headers: {"token": token});
+      Map json = jsonDecode(response.body);
+      WishListResponse wishListResponse = WishListResponse.fromJson(json);
+      if (response.statusCode >= 200 &&
+          response.statusCode < 300 &&
+          wishListResponse.data != null) {
+        return Right(wishListResponse.data!);
+      } else {
+        return Left(Failure(wishListResponse.message ??
+            "something went wrong please try again later"));
+      }
+    } catch (e) {
+      print("Exception $e");
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id) async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.wishlist);
+      Response response =
+          await post(url, body: {"productId": id}, headers: {"token": token});
+      Map json = jsonDecode(response.body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return getLoggedUserWishList();
+      } else {
+        return Left(Failure(
+            json["message"] ?? "something went wrong please tru again later"));
+      }
+    } catch (e) {
+      print("Exception $e");
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id) async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url =
+          Uri.parse("https://${EndPoints.baseUrl}${EndPoints.wishlist}/$id");
+      Response response = await delete(url, headers: {"token": token});
+      Map json = jsonDecode(response.body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return getLoggedUserWishList();
+      } else {
+        return Left(Failure(
+            json["message"] ?? "something went wrong please try again later"));
       }
     } catch (e) {
       print("Exception $e");

@@ -33,7 +33,6 @@ class CartDM {
     totalCartPrice = json['totalCartPrice'];
   }
 
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = id;
@@ -47,5 +46,4 @@ class CartDM {
     map['totalCartPrice'] = totalCartPrice;
     return map;
   }
-
 }

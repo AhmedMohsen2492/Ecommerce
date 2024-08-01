@@ -2,19 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/ui/screens/productDetails/product_detail_screen.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../screens/main/tabs/favouriteTab/fav_view_model.dart';
 
 class ProductItem extends StatelessWidget {
   ProductDM product;
   final bool isInCart;
-  ProductItem(this.product,this.isInCart, {super.key});
-
-  FavouriteViewModel favouriteViewModel = FavouriteViewModel();
+  final bool isInWishList;
+  ProductItem(this.product,this.isInCart,this.isInWishList, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +132,12 @@ class ProductItem extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-
+                WishListViewModel wishListViewModel = BlocProvider.of(context);
+                if(isInWishList){
+                  wishListViewModel.removeProductFromWishList(product.id!, context);
+                }else{
+                  wishListViewModel.addProductToWishList(product.id!, context);
+                }
               },
               child: Container(
                 padding: const EdgeInsets.all(6),
@@ -143,7 +147,7 @@ class ProductItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5000),
                 ),
                 child: Image.asset(
-                  AppAssets.favIcon,
+                  isInWishList ? AppAssets.inFavIcon : AppAssets.favIcon,
                 ),
               ),
             ),

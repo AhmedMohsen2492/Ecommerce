@@ -7,6 +7,7 @@ import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_screen.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_view_model.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
@@ -28,11 +29,15 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   MainScreenViewModel viewModel = getIt();
   ProductsOfCategoryViewModel productsOfCategoryViewModel = getIt();
-  late CartViewModel cartViewModel ;
+  late CartViewModel cartViewModel;
+
+  late WishListViewModel wishListViewModel;
+
   @override
   void initState() {
     super.initState();
-    cartViewModel = BlocProvider.of(context,listen: false);
+    cartViewModel = BlocProvider.of(context, listen: false);
+    wishListViewModel = BlocProvider.of(context);
     viewModel.loadCategories();
     viewModel.loadProducts();
   }
@@ -129,36 +134,48 @@ class _HomeTabState extends State<HomeTab> {
       ),
       itemBuilder: (context, index) => InkWell(
         onTap: () {
-          Navigator.pushNamed(context,
-              ProductsOfCategoryScreen.routeName,
+          Navigator.pushNamed(context, ProductsOfCategoryScreen.routeName,
               arguments: list[index]);
         },
-          child: CategoryItem(list, index),
+        child: CategoryItem(list, index),
       ),
     );
   }
 
   Widget buildProductsListView(List<ProductDM> list) {
-    return BlocBuilder<CartViewModel,dynamic>(
+    return BlocBuilder<WishListViewModel,dynamic>(
       builder: (context, state) {
-          CartDM? cartDM = cartViewModel.cartDM;
-          return ListView.builder(
-            itemCount: list.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              var product = list[index];
-              bool isInCart = false ;
-              if(cartDM!=null && cartDM.products!=null){
-                var productsInCart = cartDM.products ;
-                for(int i=0 ; i < productsInCart!.length ; i++){
-                  if(product.id == productsInCart[i].product?.id){
-                    isInCart = true;
+        return BlocBuilder<CartViewModel, dynamic>(
+          builder: (context, state) {
+            CartDM? cartDM = cartViewModel.cartDM;
+            List<ProductDM>? wishList = wishListViewModel.wishListDM;
+            return ListView.builder(
+              itemCount: list.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                var product = list[index];
+                bool isInCart = false;
+                bool isInWishList = false;
+                if (cartDM != null && cartDM.products != null) {
+                  var productsInCart = cartDM.products;
+                  for (int i = 0; i < productsInCart!.length; i++) {
+                    if (product.id == productsInCart[i].product?.id) {
+                      isInCart = true;
+                    }
                   }
                 }
-              }
-              return ProductItem(list[index],isInCart);
-            },
-          );
+                if (wishList != null) {
+                  for (int i = 0; i < wishList!.length; i++) {
+                    if (product.id == wishList[i].id) {
+                      isInWishList = true;
+                    }
+                  }
+                }
+                return ProductItem(list[index], isInCart,isInWishList);
+              },
+            );
+          },
+        );
       },
     );
   }
