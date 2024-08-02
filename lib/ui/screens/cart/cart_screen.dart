@@ -106,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ),
                             Text(
-                              "EGP 3650",
+                              "EGP ${cartViewModel.cartDM?.totalCartPrice ?? 0}",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 color: AppColors.darkBlue,

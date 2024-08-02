@@ -20,37 +20,48 @@ class WishListViewModel extends Cubit {
       this.addProductToWishListUseCase, this.removeProductFromWishListUseCase)
       : super(BaseInitialState());
 
-  void loadWishList() async{
+  void loadWishList() async {
     Either either = await getLoggedUserWishListUseCase.execute();
-    either.fold((error){
+    either.fold((error) {
       emit(BaseErrorState(error));
-    }, (list){
+    }, (list) {
       wishListDM = list;
       emit(BaseSuccessState());
     });
   }
 
-  void addProductToWishList(String id ,BuildContext context) async {
+  void addProductToWishList(String id, BuildContext context) async {
     showLoading(context);
     Either either = await addProductToWishListUseCase.execute(id);
-    either.fold((error){
+    either.fold((error) {
       emit(BaseErrorState(error));
-    }, (list){
+    }, (list) {
       wishListDM = list;
       emit(BaseSuccessState());
       hideLoading(context);
     });
   }
 
-  void removeProductFromWishList(String id ,BuildContext context) async {
+  void removeProductFromWishList(String id, BuildContext context) async {
     showLoading(context);
     Either either = await removeProductFromWishListUseCase.execute(id);
-    either.fold((error){
+    either.fold((error) {
       emit(BaseErrorState(error));
-    }, (list){
+    }, (list) {
       wishListDM = list;
       emit(BaseSuccessState());
       hideLoading(context);
     });
+  }
+
+  bool isInWishList(ProductDM product) {
+    if (wishListDM != null) {
+      for (int i = 0; i < wishListDM!.length; i++) {
+        if (product.id == wishListDM?[i].id) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

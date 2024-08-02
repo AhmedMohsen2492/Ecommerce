@@ -10,8 +10,6 @@ import 'package:injectable/injectable.dart';
 class ProductDetailsViewModel extends Cubit {
   ProductDetailsUseCase productDetailsUseCase;
   int imageIndex = 0 ;
-  int itemCount = 1 ;
-  num totalPrice = 0;
 
   ProductDetailsViewModel(this.productDetailsUseCase) : super(BaseInitialState());
 
@@ -28,19 +26,6 @@ class ProductDetailsViewModel extends Cubit {
   void setImageIndex(int index){
     imageIndex = index;
     emit(ImageState());
-  }
-
-  void increaseItemCount (num price){
-    itemCount++;
-    totalPrice = totalPrice + price ;
-    emit(BaseInitialState());
-  }
-
-  void decreaseItemCount (num price){
-    if(itemCount==1) return;
-    itemCount--;
-    totalPrice = totalPrice - price ;
-    emit(BaseInitialState());
   }
 
 }

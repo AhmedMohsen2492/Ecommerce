@@ -143,35 +143,18 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Widget buildProductsListView(List<ProductDM> list) {
-    return BlocBuilder<WishListViewModel,dynamic>(
+    return BlocBuilder<WishListViewModel, dynamic>(
       builder: (context, state) {
         return BlocBuilder<CartViewModel, dynamic>(
           builder: (context, state) {
-            CartDM? cartDM = cartViewModel.cartDM;
-            List<ProductDM>? wishList = wishListViewModel.wishListDM;
             return ListView.builder(
               itemCount: list.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 var product = list[index];
-                bool isInCart = false;
-                bool isInWishList = false;
-                if (cartDM != null && cartDM.products != null) {
-                  var productsInCart = cartDM.products;
-                  for (int i = 0; i < productsInCart!.length; i++) {
-                    if (product.id == productsInCart[i].product?.id) {
-                      isInCart = true;
-                    }
-                  }
-                }
-                if (wishList != null) {
-                  for (int i = 0; i < wishList!.length; i++) {
-                    if (product.id == wishList[i].id) {
-                      isInWishList = true;
-                    }
-                  }
-                }
-                return ProductItem(list[index], isInCart,isInWishList);
+                bool isInCart = cartViewModel.isInCart(product) != null;
+                bool isInWishList = wishListViewModel.isInWishList(product);
+                return ProductItem(list[index], isInCart, isInWishList);
               },
             );
           },

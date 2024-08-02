@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/productDetails/product_details_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
+import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../cart/cart_screen.dart';
 
@@ -23,14 +26,17 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   ProductDetailsViewModel viewModel = getIt();
   ProductDM? product;
+  late CartViewModel cartViewModel ;
+  late WishListViewModel wishListViewModel ;
 
   @override
   void initState() {
     super.initState();
     viewModel = getIt();
+    cartViewModel = BlocProvider.of(context);
+    wishListViewModel =  BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel.loadSpecificProduct(product?.id ?? "");
-      viewModel.totalPrice = product!.price! ;
     });
   }
 
@@ -59,260 +65,299 @@ class _ProductDetailsState extends State<ProductDetails> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.35,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    CarouselSlider(
-                      items: buildImages(product!.images!),
-                      options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        viewportFraction: 1,
-                        onPageChanged: (index, reason) {
-                          viewModel.setImageIndex(index);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: BlocBuilder(
-                        bloc: viewModel,
-                        builder: (context, state) {
-                          return AnimatedSmoothIndicator(
-                            activeIndex: viewModel.imageIndex,
-                            count: product!.images!.length,
-                            effect: ExpandingDotsEffect(
-                              activeDotColor: AppColors.primary,
-                              dotWidth: 10,
-                              dotHeight: 8,
-                              dotColor: Colors.grey,
-                              expansionFactor: 4,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: InkWell(
-                        onTap: () {
-                          //todo
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(5000),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            AppAssets.favIcon,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                "${product?.title}",
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: GoogleFonts.poppins(
-                  color: AppColors.darkBlue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border:
-                          Border.all(color: AppColors.primary.withOpacity(0.3)),
-                    ),
-                    child: Text(
-                      "${product!.sold} Sold",
-                      style: GoogleFonts.poppins(
-                        color: AppColors.darkBlue,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(AppAssets.star),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "${product!.ratingsAverage} (${product!.ratingsQuantity})",
-                        style: GoogleFonts.poppins(
-                            color: AppColors.darkBlue, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Text(
-                    "EGP ${product!.price}",
-                    style: GoogleFonts.poppins(
-                      color: AppColors.darkBlue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                "Description",
-                style: GoogleFonts.poppins(
-                  color: AppColors.darkBlue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                product!.description!.trim(),
-                style: GoogleFonts.poppins(
-                  color: AppColors.darkBlue.withOpacity(0.6),
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              BlocBuilder(
-                bloc: viewModel,
-                builder: (context, state) {
-                  return Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
                         children: [
-                          Text(
-                            "Total price",
-                            style: GoogleFonts.poppins(
-                              color: AppColors.darkBlue.withOpacity(0.6),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                          //imageSlideShow
+                          CarouselSlider(
+                            items: buildImages(product!.images!),
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              autoPlay: true,
+                              enlargeCenterPage: true,
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                viewModel.setImageIndex(index);
+                              },
                             ),
                           ),
-                          Text(
-                            "EGP ${viewModel.totalPrice}",
-                            style: GoogleFonts.poppins(
-                              color: AppColors.darkBlue,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: BlocBuilder(
+                              bloc: viewModel,
+                              builder: (context, state) {
+                                return AnimatedSmoothIndicator(
+                                  activeIndex: viewModel.imageIndex,
+                                  count: product!.images!.length,
+                                  effect: ExpandingDotsEffect(
+                                    activeDotColor: AppColors.primary,
+                                    dotWidth: 10,
+                                    dotHeight: 8,
+                                    dotColor: Colors.grey,
+                                    expansionFactor: 4,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: InkWell(
+                              onTap: () {
+                               if(wishListViewModel.isInWishList(product!)){
+                                 wishListViewModel.removeProductFromWishList(product!.id!, context);
+                               }else{
+                                 wishListViewModel.addProductToWishList(product!.id!, context);
+                               }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                margin: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(5000),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 2,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  wishListViewModel.isInWishList(product!) ? AppAssets.inFavIcon :AppAssets.favIcon,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Spacer(),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                        ),
-                        decoration: BoxDecoration(
-                            color: AppColors.primary,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      "${product?.title}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: GoogleFonts.poppins(
+                        color: AppColors.darkBlue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: AppColors.white,
+                                color: AppColors.primary.withOpacity(0.3)),
+                          ),
+                          child: Text(
+                            "${product!.sold} Sold",
+                            style: GoogleFonts.poppins(
+                              color: AppColors.darkBlue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
-                            borderRadius: BorderRadius.circular(500)),
-                        child: Row(
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Row(
                           children: [
-                            IconButton(
-                                onPressed: () {
-                                  viewModel.decreaseItemCount(product!.price!);
-                                },
-                                icon: Image.asset(
-                                  AppAssets.mini,
-                                )),
+                            Image.asset(AppAssets.star),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Text(
-                                "${viewModel.itemCount}",
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: AppColors.white)),
-                            IconButton(
-                              onPressed: () {
-                                viewModel.increaseItemCount(product!.price!);
-                              },
-                              icon: Image.asset(AppAssets.add),
+                              "${product!.ratingsAverage} (${product!.ratingsQuantity})",
+                              style: GoogleFonts.poppins(
+                                  color: AppColors.darkBlue, fontSize: 14),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  //todo
-                },
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10),
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_shopping_cart_rounded,
-                      color: AppColors.white,
+                        Spacer(),
+                        Text(
+                          "EGP ${product!.price}",
+                          style: GoogleFonts.poppins(
+                            color: AppColors.darkBlue,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      width: 8,
+                      height: 8,
                     ),
-                    Text("Add to cart",
-                        style: GoogleFonts.poppins(
-                            color: AppColors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500)),
+                    Text(
+                      "Description",
+                      style: GoogleFonts.poppins(
+                        color: AppColors.darkBlue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    ReadMoreText(
+                      product?.description?.trim() ?? "",
+                      trimLines: 4,
+                      trimMode: TrimMode.Line,
+                      trimExpandedText: " Show Less",
+                      trimCollapsedText: " Show More",
+                      moreStyle: GoogleFonts.poppins(
+                        color: AppColors.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      lessStyle: GoogleFonts.poppins(
+                        color: AppColors.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      style: GoogleFonts.poppins(
+                        color: AppColors.darkBlue.withOpacity(0.6),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            BlocBuilder(
+              bloc: viewModel,
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total price",
+                              style: GoogleFonts.poppins(
+                                color: AppColors.darkBlue.withOpacity(0.6),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              "EGP ${(product!.price!)*(cartViewModel.isInCart(product!)?.count??0)}",
+                              style: GoogleFonts.poppins(
+                                color: AppColors.darkBlue,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                          ),
+                          decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              border: Border.all(
+                                color: AppColors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(500)),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    cartViewModel.removeProductFromCart(product!.id!, context);
+                                  },
+                                  icon: Image.asset(
+                                    AppAssets.mini,
+                                  )),
+                              Text("${cartViewModel.isInCart(product!)?.count ?? 0}",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppColors.white)),
+                              IconButton(
+                                onPressed: () {
+                                  cartViewModel.addProductToCart(product!.id!, context);
+
+                                },
+                                icon: Image.asset(AppAssets.add),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if(cartViewModel.isInCart(product!)!=null){
+                          cartViewModel.removeProductFromCart(product!.id!, context);
+                        }else{
+                          cartViewModel.addProductToCart(product!.id!, context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            cartViewModel.isInCart(product!)!=null ?
+                             Icons.remove_shopping_cart_sharp
+                                :Icons.add_shopping_cart_rounded,
+                            color: AppColors.white,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                              cartViewModel.isInCart(product!)!=null ?"Remove from cart"
+                                  : "Add to Cart",
+                              style: GoogleFonts.poppins(
+                                  color: AppColors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -349,4 +394,13 @@ class _ProductDetailsState extends State<ProductDetails> {
       );
     }).toList();
   }
+
+  buildAddButton(){
+
+  }
+
+  buildCartOptions(){
+
+  }
+
 }

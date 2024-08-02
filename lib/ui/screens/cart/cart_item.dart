@@ -109,7 +109,8 @@ class CartItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("EGP ${cartProduct?.price ?? ""}",
+                    Text(
+                        "EGP ${(cartProduct?.price)!*(cartViewModel.isInCart(cartProduct!.product!)?.count??0)}",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           color: AppColors.darkBlue,
@@ -128,23 +129,33 @@ class CartItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
-                            Icons.remove_circle_outline,
-                            color: AppColors.white,
-                            size: 20,
+                          InkWell(
+                            onTap: () {
+                              cartViewModel.removeProductFromCart(cartProduct!.product!.id!, context);
+                            },
+                            child: Icon(
+                              Icons.remove_circle_outline,
+                              color: AppColors.white,
+                              size: 20,
+                            ),
                           ),
                           Text(
-                            "0",
+                            "${cartViewModel.isInCart(cartProduct!.product!)?.count ?? 0}",
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.white),
                           ),
-                          Icon(
-                            Icons.add_circle_outline,
-                            color: AppColors.white,
-                            size: 20,
+                          InkWell(
+                            onTap: () {
+                              cartViewModel.addProductToCart(cartProduct!.product!.id!, context);
+                            },
+                            child: Icon(
+                              Icons.add_circle_outline,
+                              color: AppColors.white,
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../../data/model/response/cart_dm.dart';
-import '../../../../../data/model/response/cart_product.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
 
