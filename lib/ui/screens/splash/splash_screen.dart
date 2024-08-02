@@ -7,7 +7,6 @@ import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.d
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../shared view models/cart_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,11 +20,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    super.initState();
     CartViewModel cartViewModel =  BlocProvider.of(context);
     WishListViewModel wishListViewModel = BlocProvider.of(context);
     wishListViewModel.loadWishList();
     cartViewModel.loadCart();
+    super.initState();
     Future.delayed(
         Duration(seconds: 3),
       () async {

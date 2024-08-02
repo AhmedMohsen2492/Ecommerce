@@ -6,6 +6,7 @@ import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../shared view models/wish_list_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +21,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    CartViewModel cartViewModel =  BlocProvider.of(context);
+    WishListViewModel wishListViewModel = BlocProvider.of(context);
+    wishListViewModel.loadWishList();
+    cartViewModel.loadCart();
     super.initState();
   }
 
@@ -31,11 +36,11 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Image.asset(AppAssets.routeIcon),
             const Spacer(),
-            InkWell(
+            viewModel.currentIndex != 3 ? InkWell(
               onTap: () {
                 Navigator.pushNamed(context, CartScreen.routeName);
               },
-                child: Image.asset(AppAssets.shoppingIcon)),
+                child: Image.asset(AppAssets.shoppingIcon)) : SizedBox(),
           ],
         ),
       ),

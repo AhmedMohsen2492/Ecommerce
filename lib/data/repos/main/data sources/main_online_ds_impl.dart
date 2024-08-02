@@ -81,7 +81,8 @@ class MainOnlineDsImpl extends MainOnlineDS {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(String id) async {
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(
+      String id) async {
     try {
       Uri url = Uri.https(EndPoints.baseUrl, EndPoints.products, {
         "brand": id,
@@ -148,7 +149,7 @@ class MainOnlineDsImpl extends MainOnlineDS {
   Future<Either<Failure, CartDM>> removeProductsFromCart(String id) async {
     try {
       String token = (await sharedPrefUtils.getToken())!;
-      Uri url = Uri.parse("https://${EndPoints.baseUrl}${EndPoints.cart}/$id");
+      Uri url = Uri.parse("https://ecommerce.routemisr.com/api/v1/cart/$id");
       Response response = await delete(url, headers: {"token": token});
       Map json = jsonDecode(response.body);
       CartResponse cartResponse = CartResponse.fromJson(json);
@@ -187,7 +188,8 @@ class MainOnlineDsImpl extends MainOnlineDS {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id) async {
+  Future<Either<Failure, List<ProductDM>>> addProductToWishList(
+      String id) async {
     try {
       String token = (await sharedPrefUtils.getToken())!;
       Uri url = Uri.https(EndPoints.baseUrl, EndPoints.wishlist);
@@ -207,7 +209,8 @@ class MainOnlineDsImpl extends MainOnlineDS {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id) async {
+  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(
+      String id) async {
     try {
       String token = (await sharedPrefUtils.getToken())!;
       Uri url =

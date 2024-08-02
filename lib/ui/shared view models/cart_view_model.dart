@@ -56,12 +56,12 @@ class CartViewModel extends Cubit {
     });
   }
 
-  CartProduct? isInCart(ProductDM product){
+  CartProduct? isInCart(ProductDM? product){
     var productsInCart = cartDM?.products;
     if (cartDM != null && productsInCart != null) {
       for (int i = 0; i < productsInCart!.length; i++)
       {
-        if (product.id == productsInCart[i].product?.id) {
+        if (product?.id == productsInCart[i].product?.id) {
           return productsInCart[i] ;
         }
       }

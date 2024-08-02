@@ -132,13 +132,7 @@ class _HomeTabState extends State<HomeTab> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
-      itemBuilder: (context, index) => InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, ProductsOfCategoryScreen.routeName,
-              arguments: list[index]);
-        },
-        child: CategoryItem(list, index),
-      ),
+      itemBuilder: (context, index) => CategoryItem(list[index]),
     );
   }
 

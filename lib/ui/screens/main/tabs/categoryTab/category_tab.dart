@@ -25,7 +25,6 @@ class CategoryTab extends StatefulWidget {
 
 class _CategoryTabState extends State<CategoryTab> {
   MainScreenViewModel viewModel = getIt();
-  late TabController _tabController;
 
   @override
   void initState() {

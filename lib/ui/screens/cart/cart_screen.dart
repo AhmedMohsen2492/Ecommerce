@@ -79,9 +79,9 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: cartViewModel.cartDM!.products!.length,
+                    itemCount: cartViewModel.cartDM?.products?.length,
                     itemBuilder: (context, index) {
-                      CartProduct? cartProduct = cartViewModel.cartDM!.products![index];
+                      CartProduct? cartProduct = cartViewModel.cartDM?.products?[index];
                       return CartItem(cartProduct);
                     },
                   ),

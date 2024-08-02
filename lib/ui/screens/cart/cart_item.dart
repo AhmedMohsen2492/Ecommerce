@@ -70,7 +70,8 @@ class CartItem extends StatelessWidget {
                             color: AppColors.darkBlue,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
-                          )),
+                          ),
+                      ),
                     ),
                     Spacer(),
                     InkWell(
@@ -110,7 +111,7 @@ class CartItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        "EGP ${(cartProduct?.price)!*(cartViewModel.isInCart(cartProduct!.product!)?.count??0)}",
+                        "EGP ${(cartProduct?.price)??0*(cartViewModel.isInCart(cartProduct?.product)?.count??0)}",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           color: AppColors.darkBlue,
@@ -140,7 +141,7 @@ class CartItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${cartViewModel.isInCart(cartProduct!.product!)?.count ?? 0}",
+                            "${cartViewModel.isInCart(cartProduct?.product)?.count ?? 0}",
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
                                 fontSize: 13,
