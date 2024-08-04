@@ -100,6 +100,18 @@ class MainRepoImpl extends MainRepo {
   }
 
   @override
+  Future<Either<Failure, CartDM>> updateCartProductQuantity(String id, num quantity) async{
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.updateCartProductQuantity(id,quantity);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id) async{
     final List<ConnectivityResult> connectivityResult =
     await (Connectivity().checkConnectivity());
@@ -134,4 +146,6 @@ class MainRepoImpl extends MainRepo {
       return Left(Failure("no internet connection"));
     }
   }
+
+
 }

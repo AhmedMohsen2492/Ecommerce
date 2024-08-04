@@ -166,6 +166,29 @@ class MainOnlineDsImpl extends MainOnlineDS {
   }
 
   @override
+  Future<Either<Failure, CartDM>> updateCartProductQuantity(
+      String id, num quantity) async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url = Uri.parse("https://ecommerce.routemisr.com/api/v1/cart/$id");
+      Response response =
+          await put(url, headers: {"token": token}, body: {"count": "$quantity"});
+
+      Map json = jsonDecode(response.body);
+      CartResponse cartResponse = CartResponse.fromJson(json);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(cartResponse.data!);
+      } else {
+        return Left(Failure(
+            json["message"] ?? "something went wrong please tru again later"));
+      }
+    } catch (e) {
+      print("Exception $e");
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList() async {
     try {
       String token = (await sharedPrefUtils.getToken())!;

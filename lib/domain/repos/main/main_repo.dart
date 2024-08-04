@@ -19,6 +19,8 @@ abstract class MainRepo {
 
   Future<Either<Failure,CartDM>> removeProductsFromCart(String id);
 
+  Future<Either<Failure,CartDM>> updateCartProductQuantity(String id,num quantity);
+
   Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList();
 
   Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id);

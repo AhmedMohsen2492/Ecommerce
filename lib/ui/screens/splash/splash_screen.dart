@@ -30,6 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
       () async {
           var pref = getIt<SharedPrefUtils>();
           User? user = await pref.getUser();
+          String? s = await  pref.getToken();
+          print("TOKEN =  $s");
           if(user == null)
             {
               Navigator.pushReplacementNamed(context, LoginScreen.routeName);

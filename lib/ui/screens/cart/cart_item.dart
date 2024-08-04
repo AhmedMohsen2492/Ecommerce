@@ -132,7 +132,10 @@ class CartItem extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              cartViewModel.removeProductFromCart(cartProduct!.product!.id!, context);
+                              cartViewModel.updateCartProductQuantity(
+                                  cartProduct!.product!.id!,
+                                  cartViewModel.isInCart(cartProduct?.product)!.count!-1 ,
+                                  context);
                             },
                             child: Icon(
                               Icons.remove_circle_outline,

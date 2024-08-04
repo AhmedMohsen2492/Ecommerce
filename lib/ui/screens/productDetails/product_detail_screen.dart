@@ -293,7 +293,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    cartViewModel.removeProductFromCart(product!.id!, context);
+                                    cartViewModel.updateCartProductQuantity(
+                                        product!.id!,
+                                        cartViewModel.isInCart(product)!.count!-1 ,
+                                        context);
                                   },
                                   icon: Image.asset(
                                     AppAssets.mini,
