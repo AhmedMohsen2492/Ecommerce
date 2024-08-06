@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_route/data/model/failures.dart';
 import 'package:ecommerce_route/data/model/response/cart_dm.dart';
 import 'package:ecommerce_route/data/model/response/cart_product.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
@@ -49,9 +50,9 @@ class CartViewModel extends Cubit {
   }
 
   void loadCart() async{
-    Either either  = await getLoggedUserCartUseCase.execute();
+    Either<Failure,CartDM> either  = await getLoggedUserCartUseCase.execute();
     either.fold((error){
-      emit(BaseErrorState(error));
+      emit(BaseErrorState(error.errorMessage));
     }, (cart){
       cartDM = cart;
       emit(BaseSuccessState());

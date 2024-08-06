@@ -7,4 +7,6 @@ abstract class EndPoints {
   static const String brands = "/api/v1/brands";
   static const String cart = "/api/v1/cart";
   static const String wishlist = "/api/v1/wishlist";
+  static const String updateMe = "/api/v1/users/updateMe/";
+  static const String changeMyPassword = "/api/v1/users/changeMyPassword";
 }

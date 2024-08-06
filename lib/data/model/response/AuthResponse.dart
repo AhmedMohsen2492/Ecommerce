@@ -2,16 +2,19 @@ class AuthResponse {
   String? message;
   User? user;
   String? token;
+  Map? errors;
 
   AuthResponse({
       this.message, 
       this.user, 
-      this.token,});
+      this.token,
+      this.errors});
 
   AuthResponse.fromJson(dynamic json) {
     message = json['message'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     token = json['token'];
+    errors = json['errors'];
   }
 
   Map<String, dynamic> toJson() {

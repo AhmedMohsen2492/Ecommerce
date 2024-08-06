@@ -34,7 +34,7 @@ class FavouriteItem extends StatelessWidget {
           Expanded(
             flex: 30,
             child: CachedNetworkImage(
-                imageUrl: favProduct!.imageCover ?? "",
+                imageUrl: favProduct?.imageCover ?? "",
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     border: Border.all(

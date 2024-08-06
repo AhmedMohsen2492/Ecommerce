@@ -62,35 +62,33 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
             if (state is BaseSuccessState<List<ProductDM>>) {
               return BlocBuilder<CartViewModel,dynamic>(
                 builder: (context, cartState) {
-                  return Expanded(
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, childAspectRatio: 0.8),
-                      itemCount: state.data!.length,
-                      itemBuilder: (context, index) {
-                        CartDM? cartDM = cartViewModel.cartDM;
-                        List<ProductDM>? wishList = wishListViewModel.wishListDM;
-                        var product = state.data?[index];
-                        bool isInCart = false ;
-                        bool isInWishList = false ;
-                        if(cartDM!=null && cartDM.products!=null){
-                          var productsInCart = cartDM?.products;
-                          for(int i=0 ; i < productsInCart!.length ; i++){
-                            if(product?.id == productsInCart[i].product?.id){
-                              isInCart = true;
-                            }
+                  return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, childAspectRatio: 0.8),
+                    itemCount: state.data!.length,
+                    itemBuilder: (context, index) {
+                      CartDM? cartDM = cartViewModel.cartDM;
+                      List<ProductDM>? wishList = wishListViewModel.wishListDM;
+                      var product = state.data?[index];
+                      bool isInCart = false ;
+                      bool isInWishList = false ;
+                      if(cartDM!=null && cartDM.products!=null){
+                        var productsInCart = cartDM?.products;
+                        for(int i=0 ; i < productsInCart!.length ; i++){
+                          if(product?.id == productsInCart[i].product?.id){
+                            isInCart = true;
                           }
                         }
-                        if(wishList!=null){
-                          for(int i=0 ; i < wishList!.length ; i++){
-                            if(product?.id == wishList[i].id){
-                              isInWishList = true;
-                            }
+                      }
+                      if(wishList!=null){
+                        for(int i=0 ; i < wishList!.length ; i++){
+                          if(product?.id == wishList[i].id){
+                            isInWishList = true;
                           }
                         }
-                        return ProductItem(state.data![index],isInCart,isInWishList);
-                      },
-                    ),
+                      }
+                      return ProductItem(state.data![index],isInCart,isInWishList);
+                    },
                   );
                 },
               );

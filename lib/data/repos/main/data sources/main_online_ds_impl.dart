@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_route/data/model/failures.dart';
+import 'package:ecommerce_route/data/model/response/AuthResponse.dart';
 import 'package:ecommerce_route/data/model/response/CartResponse.dart';
 import 'package:ecommerce_route/data/model/response/CategoriesResponse.dart';
 import 'package:ecommerce_route/data/model/response/ProductsResponse.dart';
@@ -171,8 +172,8 @@ class MainOnlineDsImpl extends MainOnlineDS {
     try {
       String token = (await sharedPrefUtils.getToken())!;
       Uri url = Uri.parse("https://ecommerce.routemisr.com/api/v1/cart/$id");
-      Response response =
-          await put(url, headers: {"token": token}, body: {"count": "$quantity"});
+      Response response = await put(url,
+          headers: {"token": token}, body: {"count": "$quantity"});
 
       Map json = jsonDecode(response.body);
       CartResponse cartResponse = CartResponse.fromJson(json);
@@ -248,6 +249,57 @@ class MainOnlineDsImpl extends MainOnlineDS {
       }
     } catch (e) {
       print("Exception $e");
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthResponse>> updateUserData(
+      String name, String email) async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.updateMe);
+      Response response = await put(url,
+          headers: {"token": token},
+          body: {"name": "$name", "email": "$email", "phone": "01144028877"});
+
+      Map json = jsonDecode(response.body);
+      AuthResponse userResponse = AuthResponse.fromJson(json);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(userResponse!);
+      } else {
+        return Left(Failure(userResponse.errors?["msg"] ??
+            "something went wrong please tru again later"));
+      }
+    } catch (e) {
+      return Left(Failure("something went wrong"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthResponse>> changePassword(
+      String currentPassword, String newPassword) async {
+    try {
+      String token = (await sharedPrefUtils.getToken())!;
+      Uri url = Uri.https(EndPoints.baseUrl, EndPoints.changeMyPassword);
+      Response response = await put(url, headers: {
+        "token": token
+      }, body: {
+        "currentPassword": "$currentPassword",
+        "password": "$newPassword",
+        "rePassword": "$newPassword"
+      });
+      Map json = jsonDecode(response.body);
+      AuthResponse authResponse = AuthResponse.fromJson(json);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        sharedPrefUtils.saveToken(authResponse.token!);
+        sharedPrefUtils.saveUser(authResponse.user!);
+        return Right(authResponse!);
+      } else {
+        return Left(Failure(authResponse.errors?["msg"] ??
+            "something went wrong please tru again later"));
+      }
+    } catch (e) {
       return Left(Failure("something went wrong"));
     }
   }

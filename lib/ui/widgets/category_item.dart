@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-
 import '../screens/productsOfCategory/products_of_category_screen.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -53,4 +52,5 @@ class CategoryItem extends StatelessWidget {
       ),
     );
   }
+
 }

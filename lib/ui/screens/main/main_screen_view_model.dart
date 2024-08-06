@@ -1,4 +1,5 @@
 import 'package:ecommerce_route/data/utils/sharedpref_utils.dart';
+import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/categoryTab/category_tab.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/favouriteTab/fav_tab.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/homeTab/home_tab.dart';
@@ -25,7 +26,6 @@ class MainScreenViewModel extends Cubit {
   GetAllBrandsUseCase getAllBrandsUseCase;
   GetProductsFromSpecificBrandUseCase getProductsFromSpecificBrandUseCase;
   SharedPrefUtils sharedPrefUtils ;
-  User? currentUser ;
 
   set currentTab(int newIndex){
     currentIndex = newIndex;
@@ -48,10 +48,6 @@ class MainScreenViewModel extends Cubit {
     getProductsFromSpecificBrandUseCase.execute(id);
   }
 
-  void loadUserData() async{
-    currentUser = await sharedPrefUtils.getUser() ;
-    emit(BaseSuccessState());
-  }
 }
 
 class MainScreenInitialState {}

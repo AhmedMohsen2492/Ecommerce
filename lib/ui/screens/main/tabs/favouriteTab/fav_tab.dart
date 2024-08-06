@@ -25,6 +25,7 @@ class _FavouritesTabState extends State<FavouritesTab> {
     super.initState();
     wishListViewModel = BlocProvider.of(context);
     cartViewModel = BlocProvider.of(context);
+    wishListViewModel.loadWishList();
   }
 
   @override
@@ -73,15 +74,15 @@ class _FavouritesTabState extends State<FavouritesTab> {
                 child: BlocBuilder<CartViewModel,dynamic>(
                   builder: (context, state) {
                     return ListView.builder(
-                      itemCount: wishListViewModel.wishListDM!.length,
+                      itemCount: wishListViewModel.wishListDM?.length,
                       itemBuilder: (context, index) {
                         CartDM? cartDM = cartViewModel.cartDM;
-                        ProductDM favProduct = wishListViewModel.wishListDM![index] ;
+                        ProductDM? favProduct = wishListViewModel.wishListDM?[index] ;
                         bool isInCart = false;
                         if (cartDM != null && cartDM.products != null) {
                           var productsInCart = cartDM.products;
                           for (int i = 0; i < productsInCart!.length; i++) {
-                            if (favProduct.id == productsInCart[i].product?.id) {
+                            if (favProduct!.id == productsInCart[i].product?.id) {
                               isInCart = true;
                             }
                           }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_route/data/model/failures.dart';
 import 'package:ecommerce_route/domain/use%20cases/WishListUseCase/add_product_to_wish_list_use_case.dart';
 import 'package:ecommerce_route/domain/use%20cases/WishListUseCase/get_logged_user_wish_list_use_case.dart';
 import 'package:ecommerce_route/domain/use%20cases/WishListUseCase/remove_product_from_wish_list_use_case.dart';
@@ -21,9 +22,9 @@ class WishListViewModel extends Cubit {
       : super(BaseInitialState());
 
   void loadWishList() async {
-    Either either = await getLoggedUserWishListUseCase.execute();
+    Either<Failure,List<ProductDM>> either = await getLoggedUserWishListUseCase.execute();
     either.fold((error) {
-      emit(BaseErrorState(error));
+      emit(BaseErrorState(error.errorMessage));
     }, (list) {
       wishListDM = list;
       emit(BaseSuccessState());

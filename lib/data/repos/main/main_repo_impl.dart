@@ -8,6 +8,8 @@ import 'package:ecommerce_route/domain/repos/main/data%20sources/main_online_ds.
 import 'package:ecommerce_route/domain/repos/main/main_repo.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../model/response/AuthResponse.dart';
+
 @Injectable(as: MainRepo)
 class MainRepoImpl extends MainRepo {
   MainOnlineDS mainOnlineDS;
@@ -142,6 +144,30 @@ class MainRepoImpl extends MainRepo {
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       return mainOnlineDS.removeProductFromWishList(id);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthResponse>> updateUserData(String name, String email) async{
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.updateUserData(name,email);
+    } else {
+      return Left(Failure("no internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthResponse>> changePassword(String currentPassword, String newPassword)async {
+    final List<ConnectivityResult> connectivityResult =
+    await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return mainOnlineDS.changePassword(currentPassword,newPassword);
     } else {
       return Left(Failure("no internet connection"));
     }

@@ -3,6 +3,7 @@ import 'package:ecommerce_route/data/model/failures.dart';
 import 'package:ecommerce_route/data/model/response/cart_dm.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
+import '../../../../data/model/response/AuthResponse.dart';
 
 abstract class MainOnlineDS {
   Future<Either<Failure, List<CategoryDM>>> getCategories();
@@ -27,5 +28,8 @@ abstract class MainOnlineDS {
 
   Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id);
 
+  Future<Either<Failure,AuthResponse>> updateUserData(String name,String email);
 
+  Future<Either<Failure,AuthResponse>> changePassword(String currentPassword,
+      String newPassword);
 }
