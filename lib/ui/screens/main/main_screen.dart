@@ -10,6 +10,7 @@ import '../../shared view models/wish_list_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
   static const String routeName = "main";
 
   @override
@@ -21,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    CartViewModel cartViewModel =  BlocProvider.of(context);
+    CartViewModel cartViewModel = BlocProvider.of(context);
     WishListViewModel wishListViewModel = BlocProvider.of(context);
     wishListViewModel.loadWishList();
     cartViewModel.loadCart();
@@ -36,11 +37,13 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Image.asset(AppAssets.routeIcon),
             const Spacer(),
-            viewModel.currentIndex != 3 ? InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, CartScreen.routeName);
-              },
-                child: Image.asset(AppAssets.shoppingIcon)) : SizedBox(),
+            viewModel.currentIndex != 3
+                ? InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, CartScreen.routeName);
+                    },
+                    child: Image.asset(AppAssets.shoppingIcon))
+                : const SizedBox(),
           ],
         ),
       ),

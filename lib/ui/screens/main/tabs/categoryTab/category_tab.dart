@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
@@ -10,15 +9,15 @@ import 'package:ecommerce_route/ui/utils/base_states.dart';
 import 'package:ecommerce_route/ui/widgets/error_view.dart';
 import 'package:ecommerce_route/ui/widgets/loading_view.dart';
 import 'package:ecommerce_route/ui/widgets/product_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../../data/model/response/cart_dm.dart';
 import '../../../../utils/app_assets.dart';
 
 class CategoryTab extends StatefulWidget {
+  const CategoryTab({super.key});
+
   @override
   State<CategoryTab> createState() => _CategoryTabState();
 }
@@ -52,10 +51,10 @@ class _CategoryTabState extends State<CategoryTab> {
                           MediaQuery.sizeOf(context).width * 0.38),
                       child: AppBar(
                         flexibleSpace: Container(
-                          margin: EdgeInsets.only(bottom: 15),
+                          margin: const EdgeInsets.only(bottom: 15),
                           decoration: BoxDecoration(
                               color: AppColors.lightGrey.withOpacity(0.5),
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(15),
                                 bottomRight: Radius.circular(15),
                               )),
@@ -90,7 +89,7 @@ class _CategoryTabState extends State<CategoryTab> {
                           return RotatedBox(
                               quarterTurns: 1,
                               child: TabBarView(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children:
                                     tabsViewBuilder(state.data!, brandState),
                               ));
@@ -120,7 +119,7 @@ class _CategoryTabState extends State<CategoryTab> {
                             ),
                           );
                         } else {
-                          return LoadingView();
+                          return const LoadingView();
                         }
                       },
                     )),
@@ -130,7 +129,7 @@ class _CategoryTabState extends State<CategoryTab> {
         } else if (state is BaseErrorState) {
           return ErrorView(state.errorMessage);
         } else {
-          return LoadingView();
+          return const LoadingView();
         }
       },
     );
@@ -156,7 +155,7 @@ class _CategoryTabState extends State<CategoryTab> {
   List<Widget> tabsViewBuilder(List<CategoryDM> brandsList,
       BaseSuccessState<List<ProductDM>> brandState) {
     return brandsList.map((brand) {
-      return BlocBuilder<WishListViewModel,dynamic>(
+      return BlocBuilder<WishListViewModel, dynamic>(
         builder: (context, state) {
           return BlocBuilder<CartViewModel, dynamic>(
             builder: (context, state) {
@@ -164,9 +163,10 @@ class _CategoryTabState extends State<CategoryTab> {
                 itemCount: brandState.data!.length,
                 itemBuilder: (context, index) {
                   CartViewModel cartViewModel = BlocProvider.of(context);
-                  WishListViewModel wishListViewModel = BlocProvider.of(context);
+                  WishListViewModel wishListViewModel =
+                      BlocProvider.of(context);
                   CartDM? cartDM = cartViewModel.cartDM;
-                  List<ProductDM>? wishList = wishListViewModel.wishListDM ;
+                  List<ProductDM>? wishList = wishListViewModel.wishListDM;
                   var productsInCart = cartDM?.products;
                   var product = brandState.data?[index];
                   bool isInCart = false;
@@ -183,7 +183,7 @@ class _CategoryTabState extends State<CategoryTab> {
                   }
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProductItem(product!, isInCart,isInWishList),
+                    child: ProductItem(product!, isInCart, isInWishList),
                   );
                 },
               );

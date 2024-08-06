@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
   static const String routeName = "login";
 
   @override
@@ -53,25 +54,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
-                  "Please sign in with your mail",
-                  style: GoogleFonts.poppins(
-                    color: AppColors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                  )
-                ),
+                Text("Please sign in with your mail",
+                    style: GoogleFonts.poppins(
+                      color: AppColors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                    )),
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
-                  "Email Address",
-                  style: GoogleFonts.poppins(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  )
-                ),
+                Text("Email Address",
+                    style: GoogleFonts.poppins(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    )),
                 const SizedBox(
                   height: 8,
                 ),
@@ -80,12 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: viewModel.emailController,
                   type: TextInputType.emailAddress,
                   validator: (email) {
-                    if(email!.trim().isEmpty){
+                    if (email!.trim().isEmpty) {
                       return "please enter email";
                     }
-                    final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    final bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(email);
-                    if(!emailValid){
+                    if (!emailValid) {
                       return "Email format is not valid";
                     }
                     return null;
@@ -94,30 +92,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Password",
-                  style: GoogleFonts.poppins(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  )
-                ),
+                Text("Password",
+                    style: GoogleFonts.poppins(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    )),
                 const SizedBox(
                   height: 8,
                 ),
                 BlocBuilder(
                   bloc: viewModel,
                   builder: (context, state) {
-                    return  CustomTextFormField(
+                    return CustomTextFormField(
                       hintText: "enter your Password",
                       controller: viewModel.passwordController,
                       type: TextInputType.visiblePassword,
                       isPassword: viewModel.isPassword,
                       validator: (password) {
-                        if(password!.isEmpty) {
+                        if (password!.isEmpty) {
                           return "please enter password";
                         }
-                        if(password.trim().length < 6){
+                        if (password.trim().length < 6) {
                           return "password should be at least 6 characters";
                         }
                         return null;
@@ -126,25 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             viewModel.showPassword();
                           },
-                          icon: Icon(
-                              viewModel.isPassword ? Icons.visibility : Icons.visibility_off)
-                      ),
+                          icon: Icon(viewModel.isPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off)),
                     );
                   },
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                 Align(
+                Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
-                    "Forget Password",
-                    style: GoogleFonts.poppins(
-                      color: AppColors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                    )
-                  ),
+                  child: Text("Forget Password",
+                      style: GoogleFonts.poppins(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      )),
                 ),
                 const SizedBox(
                   height: 30,
@@ -158,14 +152,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
-                  child:  Text(
-                    "Login",
-                    style: GoogleFonts.poppins(
-                        color: AppColors.primary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                    )
-                  ),
+                  child: Text("Login",
+                      style: GoogleFonts.poppins(
+                          color: AppColors.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600)),
                 ),
                 const SizedBox(
                   height: 8,
@@ -173,26 +164,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text(
-                      "Don't have an account?",
-                      style: GoogleFonts.poppins(
-                        color: AppColors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      )
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignUpScreen.routeName);
-                      },
-                      child:  Text(
-                        "Create Account",
+                    Text("Don't have an account?",
                         style: GoogleFonts.poppins(
                           color: AppColors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                        )
-                      ),
+                        )),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, SignUpScreen.routeName);
+                      },
+                      child: Text("Create Account",
+                          style: GoogleFonts.poppins(
+                            color: AppColors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          )),
                     ),
                   ],
                 ),
@@ -201,13 +188,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         listener: (context, state) {
-          print(state);
-          if(state is BaseLoadingState){
+          if (state is BaseLoadingState) {
             showLoading(context);
-          }else if (state is BaseSuccessState){
+          } else if (state is BaseSuccessState) {
             Navigator.pop(context);
             Navigator.pushReplacementNamed(context, MainScreen.routeName);
-          }else if (state is BaseErrorState){
+          } else if (state is BaseErrorState) {
             Navigator.pop(context);
             showErrorDialog(context, state.errorMessage);
           }
@@ -215,5 +201,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

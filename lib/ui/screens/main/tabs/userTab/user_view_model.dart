@@ -12,12 +12,17 @@ import '../../../../../data/utils/sharedpref_utils.dart';
 import '../../../auth/login/login_screen.dart';
 
 @injectable
-class UserViewModel extends Cubit{
+class UserViewModel extends Cubit {
   ChangePasswordUseCase changePasswordUseCase;
-  UpdateUserDateUseCase updateUserDateUseCase ;
-  SharedPrefUtils sharedPrefUtils ;
-  User? currentUser ;
-  UserViewModel(this.sharedPrefUtils,this.updateUserDateUseCase,this.changePasswordUseCase):super(UserInitialState());
+  UpdateUserDateUseCase updateUserDateUseCase;
+
+  SharedPrefUtils sharedPrefUtils;
+
+  User? currentUser;
+
+  UserViewModel(this.sharedPrefUtils, this.updateUserDateUseCase,
+      this.changePasswordUseCase)
+      : super(UserInitialState());
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -26,57 +31,62 @@ class UserViewModel extends Cubit{
   bool oldPass = true;
   bool newPass = true;
 
-  void changeOldPassVisibility(){
-    oldPass = !oldPass;
-    emit(UserInitialState());
-  }
-  void changeNewPassVisibility(){
+  void changeOldPassVisibility() {
     oldPass = !oldPass;
     emit(UserInitialState());
   }
 
+  void changeNewPassVisibility() {
+    newPass = !newPass;
+    emit(UserInitialState());
+  }
 
-  void logout(BuildContext context){
+  void logout(BuildContext context) {
     sharedPrefUtils.deleteUser();
-    Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (Route<dynamic> route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, LoginScreen.routeName, (Route<dynamic> route) => false);
   }
 
-  void loadUserData() async{
-    currentUser = await sharedPrefUtils.getUser() ;
+  void loadUserData() async {
+    currentUser = await sharedPrefUtils.getUser();
     emit(BaseSuccessState());
   }
 
-  void updateUserData(String name,String email,BuildContext context) async{
+  void updateUserData(String name, String email, BuildContext context) async {
     showLoading(context);
-    Either<Failure,AuthResponse> either = await updateUserDateUseCase.execute(name, email);
-    either.fold((error){
+    Either<Failure, AuthResponse> either =
+        await updateUserDateUseCase.execute(name, email);
+    either.fold((error) {
       emit(UserErrorState(error.errorMessage));
-    }, (user){
-      currentUser = user.user ;
+    }, (user) {
+      currentUser = user.user;
       sharedPrefUtils.saveUser(currentUser!);
       emit(UserSuccessState());
     });
     hideLoading(context);
   }
 
-  void changePassword(String currentPassword, String newPassword,BuildContext context) async{
+  void changePassword(
+      String currentPassword, String newPassword, BuildContext context) async {
     showLoading(context);
-    Either<Failure,AuthResponse> either = await changePasswordUseCase.execute(currentPassword,
-        newPassword);
-    either.fold((error){
-      print("Error ${error.errorMessage}");
+    Either<Failure, AuthResponse> either =
+        await changePasswordUseCase.execute(currentPassword, newPassword);
+    either.fold((error) {
       emit(UserErrorState(error.errorMessage));
-    }, (user){
-      currentUser = user.user ;
+    }, (user) {
+      currentUser = user.user;
       emit(UserSuccessState());
     });
     hideLoading(context);
   }
 }
 
-class UserInitialState{}
-class UserErrorState{
+class UserInitialState {}
+
+class UserErrorState {
   String error;
+
   UserErrorState(this.error);
 }
-class UserSuccessState{}
+
+class UserSuccessState {}

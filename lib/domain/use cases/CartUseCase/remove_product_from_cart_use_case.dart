@@ -7,9 +7,10 @@ import 'package:injectable/injectable.dart';
 @injectable
 class RemoveProductFromCartUseCase {
   MainRepo mainRepo;
+
   RemoveProductFromCartUseCase(this.mainRepo);
 
-  Future<Either<Failure, CartDM>> execute(String id ){
+  Future<Either<Failure, CartDM>> execute(String id) {
     return mainRepo.removeProductsFromCart(id);
   }
 }

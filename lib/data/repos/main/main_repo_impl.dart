@@ -7,7 +7,6 @@ import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/repos/main/data%20sources/main_online_ds.dart';
 import 'package:ecommerce_route/domain/repos/main/main_repo.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../model/response/AuthResponse.dart';
 
 @Injectable(as: MainRepo)
@@ -102,21 +101,23 @@ class MainRepoImpl extends MainRepo {
   }
 
   @override
-  Future<Either<Failure, CartDM>> updateCartProductQuantity(String id, num quantity) async{
+  Future<Either<Failure, CartDM>> updateCartProductQuantity(
+      String id, num quantity) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      return mainOnlineDS.updateCartProductQuantity(id,quantity);
+      return mainOnlineDS.updateCartProductQuantity(id, quantity);
     } else {
       return Left(Failure("no internet connection"));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> addProductToWishList(String id) async{
+  Future<Either<Failure, List<ProductDM>>> addProductToWishList(
+      String id) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       return mainOnlineDS.addProductToWishList(id);
@@ -126,9 +127,9 @@ class MainRepoImpl extends MainRepo {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList() async{
+  Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList() async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       return mainOnlineDS.getLoggedUserWishList();
@@ -138,9 +139,10 @@ class MainRepoImpl extends MainRepo {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id) async{
+  Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(
+      String id) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       return mainOnlineDS.removeProductFromWishList(id);
@@ -150,28 +152,28 @@ class MainRepoImpl extends MainRepo {
   }
 
   @override
-  Future<Either<Failure, AuthResponse>> updateUserData(String name, String email) async{
+  Future<Either<Failure, AuthResponse>> updateUserData(
+      String name, String email) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      return mainOnlineDS.updateUserData(name,email);
+      return mainOnlineDS.updateUserData(name, email);
     } else {
       return Left(Failure("no internet connection"));
     }
   }
 
   @override
-  Future<Either<Failure, AuthResponse>> changePassword(String currentPassword, String newPassword)async {
+  Future<Either<Failure, AuthResponse>> changePassword(
+      String currentPassword, String newPassword) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      return mainOnlineDS.changePassword(currentPassword,newPassword);
+      return mainOnlineDS.changePassword(currentPassword, newPassword);
     } else {
       return Left(Failure("no internet connection"));
     }
   }
-
-
 }

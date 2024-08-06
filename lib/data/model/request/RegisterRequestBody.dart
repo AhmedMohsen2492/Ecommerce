@@ -6,11 +6,12 @@ class RegisterRequestBody {
   String? phone;
 
   RegisterRequestBody({
-      this.name, 
-      this.email, 
-      this.password, 
-      this.rePassword, 
-      this.phone,});
+    this.name,
+    this.email,
+    this.password,
+    this.rePassword,
+    this.phone,
+  });
 
   RegisterRequestBody.fromJson(dynamic json) {
     name = json['name'];

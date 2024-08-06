@@ -10,7 +10,8 @@ class UpdateUserDateUseCase {
 
   UpdateUserDateUseCase(this.mainRepo);
 
-  Future<Either<Failure, AuthResponse>> execute(String name,String email) async {
+  Future<Either<Failure, AuthResponse>> execute(
+      String name, String email) async {
     return mainRepo.updateUserData(name, email);
   }
 }

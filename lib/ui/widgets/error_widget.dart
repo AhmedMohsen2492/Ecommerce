@@ -3,13 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_colors.dart';
 
 class MyErrorWidget {
-
   static void showError(
       {required BuildContext context,
-        required String errorTitle,
-        required String errorDescription,
-        required List<Widget> actions
-      }) {
+      required String errorTitle,
+      required String errorDescription,
+      required List<Widget> actions}) {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -21,20 +19,18 @@ class MyErrorWidget {
               size: 40,
             ),
             title: Text(
-             errorTitle,
+              errorTitle,
               style: GoogleFonts.poppins(
                   color: AppColors.primary,
                   fontSize: 18,
-                  fontWeight: FontWeight.w600
-              ),
+                  fontWeight: FontWeight.w600),
             ),
             content: Text(
               errorDescription,
               style: GoogleFonts.poppins(
                   color: AppColors.primary,
                   fontSize: 16,
-                  fontWeight: FontWeight.w400
-              ),
+                  fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,
             ),
             actions: actions,
@@ -43,7 +39,6 @@ class MyErrorWidget {
             surfaceTintColor: AppColors.red,
             scrollable: true,
           );
-        }
-    );
+        });
   }
 }

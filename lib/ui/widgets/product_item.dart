@@ -11,16 +11,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProductItem extends StatelessWidget {
   ProductDM product;
-  final bool isInCart;
-  final bool isInWishList;
-  ProductItem(this.product,this.isInCart,this.isInWishList, {super.key});
+  bool isInCart;
+  bool isInWishList;
+
+  ProductItem(this.product, this.isInCart, this.isInWishList, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, ProductDetails.routeName,
-        arguments: product);
+            arguments: product);
       },
       child: Container(
         height: MediaQuery.of(context).size.height * 0.3,
@@ -58,7 +59,8 @@ class ProductItem extends StatelessWidget {
                         color: AppColors.primary,
                       ),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -111,14 +113,14 @@ class ProductItem extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   CartViewModel cartViewModel = BlocProvider.of(context);
-                  if(isInCart){
-                    cartViewModel.removeProductFromCart(product.id!,context);
-                  }else{
-                    cartViewModel.addProductToCart(product.id!,context);
+                  if (isInCart) {
+                    cartViewModel.removeProductFromCart(product.id!, context);
+                  } else {
+                    cartViewModel.addProductToCart(product.id!, context);
                   }
                 },
                 icon: Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(6000)),
@@ -133,9 +135,10 @@ class ProductItem extends StatelessWidget {
             InkWell(
               onTap: () {
                 WishListViewModel wishListViewModel = BlocProvider.of(context);
-                if(isInWishList){
-                  wishListViewModel.removeProductFromWishList(product.id!, context);
-                }else{
+                if (isInWishList) {
+                  wishListViewModel.removeProductFromWishList(
+                      product.id!, context);
+                } else {
                   wishListViewModel.addProductToWishList(product.id!, context);
                 }
               },

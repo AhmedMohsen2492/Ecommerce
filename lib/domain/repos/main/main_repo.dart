@@ -12,15 +12,17 @@ abstract class MainRepo {
 
   Future<Either<Failure, List<CategoryDM>>> getBrands();
 
-  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(String id);
+  Future<Either<Failure, List<ProductDM>>> getProductsFromSpecificBrand(
+      String id);
 
-  Future<Either<Failure,CartDM>> getLoggedUserCart();
+  Future<Either<Failure, CartDM>> getLoggedUserCart();
 
-  Future<Either<Failure,CartDM>> addProductToCart(String id);
+  Future<Either<Failure, CartDM>> addProductToCart(String id);
 
-  Future<Either<Failure,CartDM>> removeProductsFromCart(String id);
+  Future<Either<Failure, CartDM>> removeProductsFromCart(String id);
 
-  Future<Either<Failure,CartDM>> updateCartProductQuantity(String id,num quantity);
+  Future<Either<Failure, CartDM>> updateCartProductQuantity(
+      String id, num quantity);
 
   Future<Either<Failure, List<ProductDM>>> getLoggedUserWishList();
 
@@ -28,8 +30,9 @@ abstract class MainRepo {
 
   Future<Either<Failure, List<ProductDM>>> removeProductFromWishList(String id);
 
-  Future<Either<Failure,AuthResponse>> updateUserData(String name,String email);
+  Future<Either<Failure, AuthResponse>> updateUserData(
+      String name, String email);
 
-  Future<Either<Failure,AuthResponse>> changePassword(String currentPassword,
-      String newPassword);
+  Future<Either<Failure, AuthResponse>> changePassword(
+      String currentPassword, String newPassword);
 }

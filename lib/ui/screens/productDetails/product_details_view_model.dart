@@ -9,9 +9,10 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ProductDetailsViewModel extends Cubit {
   ProductDetailsUseCase productDetailsUseCase;
-  int imageIndex = 0 ;
+  int imageIndex = 0;
 
-  ProductDetailsViewModel(this.productDetailsUseCase) : super(BaseInitialState());
+  ProductDetailsViewModel(this.productDetailsUseCase)
+      : super(BaseInitialState());
 
   void loadSpecificProduct(String id) async {
     emit(BaseLoadingState());
@@ -23,12 +24,10 @@ class ProductDetailsViewModel extends Cubit {
     });
   }
 
-  void setImageIndex(int index){
+  void setImageIndex(int index) {
     imageIndex = index;
     emit(ImageState());
   }
-
 }
 
-class ImageState{}
-
+class ImageState {}

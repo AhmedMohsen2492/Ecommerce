@@ -7,9 +7,7 @@ import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_assets.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
@@ -19,6 +17,8 @@ import '../cart/cart_screen.dart';
 class ProductDetails extends StatefulWidget {
   static const String routeName = "ProductDetails";
 
+  const ProductDetails({super.key});
+
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
@@ -26,15 +26,16 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   ProductDetailsViewModel viewModel = getIt();
   ProductDM? product;
-  late CartViewModel cartViewModel ;
-  late WishListViewModel wishListViewModel ;
+  late CartViewModel cartViewModel;
+
+  late WishListViewModel wishListViewModel;
 
   @override
   void initState() {
     super.initState();
     viewModel = getIt();
     cartViewModel = BlocProvider.of(context);
-    wishListViewModel =  BlocProvider.of(context);
+    wishListViewModel = BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel.loadSpecificProduct(product?.id ?? "");
     });
@@ -99,7 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 return AnimatedSmoothIndicator(
                                   activeIndex: viewModel.imageIndex,
                                   count: product!.images!.length,
-                                  effect: ExpandingDotsEffect(
+                                  effect: const ExpandingDotsEffect(
                                     activeDotColor: AppColors.primary,
                                     dotWidth: 10,
                                     dotHeight: 8,
@@ -114,11 +115,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                             alignment: Alignment.topRight,
                             child: InkWell(
                               onTap: () {
-                               if(wishListViewModel.isInWishList(product!)){
-                                 wishListViewModel.removeProductFromWishList(product!.id!, context);
-                               }else{
-                                 wishListViewModel.addProductToWishList(product!.id!, context);
-                               }
+                                if (wishListViewModel.isInWishList(product!)) {
+                                  wishListViewModel.removeProductFromWishList(
+                                      product!.id!, context);
+                                } else {
+                                  wishListViewModel.addProductToWishList(
+                                      product!.id!, context);
+                                }
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(6),
@@ -131,13 +134,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       color: Colors.grey.withOpacity(0.5),
                                       spreadRadius: 2,
                                       blurRadius: 2,
-                                      offset: Offset(
+                                      offset: const Offset(
                                           0, 3), // changes position of shadow
                                     ),
                                   ],
                                 ),
                                 child: Image.asset(
-                                  wishListViewModel.isInWishList(product!) ? AppAssets.inFavIcon :AppAssets.favIcon,
+                                  wishListViewModel.isInWishList(product!)
+                                      ? AppAssets.inFavIcon
+                                      : AppAssets.favIcon,
                                 ),
                               ),
                             ),
@@ -145,7 +150,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -158,14 +163,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Row(
                       children: [
                         Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
@@ -180,7 +185,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Row(
@@ -196,7 +201,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
                           "EGP ${product!.price}",
                           style: GoogleFonts.poppins(
@@ -207,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -218,7 +223,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     ReadMoreText(
@@ -243,7 +248,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                   ],
@@ -269,7 +274,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                             Text(
-                              "EGP ${(product!.price!)*(cartViewModel.isInCart(product!)?.count??0)}",
+                              "EGP ${(product!.price!) * (cartViewModel.isInCart(product!)?.count ?? 0)}",
                               style: GoogleFonts.poppins(
                                 color: AppColors.darkBlue,
                                 fontSize: 18,
@@ -278,9 +283,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 8,
                           ),
                           decoration: BoxDecoration(
@@ -295,21 +300,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   onPressed: () {
                                     cartViewModel.updateCartProductQuantity(
                                         product!.id!,
-                                        cartViewModel.isInCart(product)!.count!-1 ,
+                                        cartViewModel
+                                                .isInCart(product)!
+                                                .count! -
+                                            1,
                                         context);
                                   },
                                   icon: Image.asset(
                                     AppAssets.mini,
                                   )),
-                              Text("${cartViewModel.isInCart(product!)?.count ?? 0}",
+                              Text(
+                                  "${cartViewModel.isInCart(product!)?.count ?? 0}",
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
                                       color: AppColors.white)),
                               IconButton(
                                 onPressed: () {
-                                  cartViewModel.addProductToCart(product!.id!, context);
-
+                                  cartViewModel.addProductToCart(
+                                      product!.id!, context);
                                 },
                                 icon: Image.asset(AppAssets.add),
                               ),
@@ -318,14 +327,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if(cartViewModel.isInCart(product!)!=null){
-                          cartViewModel.removeProductFromCart(product!.id!, context);
-                        }else{
+                        if (cartViewModel.isInCart(product!) != null) {
+                          cartViewModel.removeProductFromCart(
+                              product!.id!, context);
+                        } else {
                           cartViewModel.addProductToCart(product!.id!, context);
                         }
                       },
@@ -338,16 +348,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            cartViewModel.isInCart(product!)!=null ?
-                             Icons.remove_shopping_cart_sharp
-                                :Icons.add_shopping_cart_rounded,
+                            cartViewModel.isInCart(product!) != null
+                                ? Icons.remove_shopping_cart_sharp
+                                : Icons.add_shopping_cart_rounded,
                             color: AppColors.white,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Text(
-                              cartViewModel.isInCart(product!)!=null ?"Remove from cart"
+                              cartViewModel.isInCart(product!) != null
+                                  ? "Remove from cart"
                                   : "Add to Cart",
                               style: GoogleFonts.poppins(
                                   color: AppColors.white,
@@ -398,12 +409,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     }).toList();
   }
 
-  buildAddButton(){
+  buildAddButton() {}
 
-  }
-
-  buildCartOptions(){
-
-  }
-
+  buildCartOptions() {}
 }

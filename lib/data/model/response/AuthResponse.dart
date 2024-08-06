@@ -4,11 +4,7 @@ class AuthResponse {
   String? token;
   Map? errors;
 
-  AuthResponse({
-      this.message, 
-      this.user, 
-      this.token,
-      this.errors});
+  AuthResponse({this.message, this.user, this.token, this.errors});
 
   AuthResponse.fromJson(dynamic json) {
     message = json['message'];
@@ -34,9 +30,10 @@ class User {
   String? role;
 
   User({
-      this.name, 
-      this.email, 
-      this.role,});
+    this.name,
+    this.email,
+    this.role,
+  });
 
   User.fromJson(dynamic json) {
     name = json['name'];

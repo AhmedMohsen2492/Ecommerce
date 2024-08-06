@@ -4,19 +4,21 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   String hintText;
   bool isPassword;
-  TextEditingController controller ;
-  TextInputType type;
-  IconButton? suffix ;
-  String? Function(String?)? validator ;
+  TextEditingController controller;
 
-  CustomTextFormField({
+  TextInputType type;
+  IconButton? suffix;
+
+  String? Function(String?)? validator;
+
+  CustomTextFormField({super.key,
     required this.hintText,
     this.isPassword = false,
     required this.controller,
     required this.type,
     this.suffix,
     this.validator,
-});
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: type,
       obscureText: isPassword,
       validator: validator,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.black,
       ),
       decoration: InputDecoration(
@@ -33,21 +35,15 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: AppColors.white,
         hintText: hintText,
         suffixIcon: suffix,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
-        focusedBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20)
-        ),
-        errorBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20)
-        ),
-        disabledBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20)
-        ),
-        focusedErrorBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20)
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        focusedBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        errorBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        disabledBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        focusedErrorBorder:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
       ),
     );
   }

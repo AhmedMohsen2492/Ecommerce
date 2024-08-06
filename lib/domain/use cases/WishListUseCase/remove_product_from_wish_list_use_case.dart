@@ -10,7 +10,7 @@ class RemoveProductFromWishListUseCase {
 
   RemoveProductFromWishListUseCase(this.mainRepo);
 
-  Future<Either<Failure, List<ProductDM>>> execute(String id){
+  Future<Either<Failure, List<ProductDM>>> execute(String id) {
     return mainRepo.removeProductFromWishList(id);
   }
 }

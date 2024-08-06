@@ -22,7 +22,8 @@ class WishListViewModel extends Cubit {
       : super(BaseInitialState());
 
   void loadWishList() async {
-    Either<Failure,List<ProductDM>> either = await getLoggedUserWishListUseCase.execute();
+    Either<Failure, List<ProductDM>> either =
+        await getLoggedUserWishListUseCase.execute();
     either.fold((error) {
       emit(BaseErrorState(error.errorMessage));
     }, (list) {

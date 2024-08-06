@@ -9,25 +9,25 @@ import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ProductsOfCategoryDS)
-class ProductsOfCategoryDsImpl extends ProductsOfCategoryDS{
+class ProductsOfCategoryDsImpl extends ProductsOfCategoryDS {
   @override
-  Future<Either<Failure,List<ProductDM>>> getProductsOfCategory(String id) async{
-      try{
-        Uri url = Uri.https(EndPoints.baseUrl,EndPoints.products,{
-          "category[in]": id
-        });
-        Response response = await get(url);
-        Map json = jsonDecode(response.body);
-        ProductsResponse productsResponse =ProductsResponse.fromJson(json);
-        if(response.statusCode >=200 && response.statusCode<300 &&
-            productsResponse.data?.isNotEmpty == true){
-          return Right(productsResponse.data!) ;
-        }else{
-          return Left(Failure("something went wrong please tru again later"));
-        }
-      }catch(error){
-        return Left(Failure("something went wrong"));
+  Future<Either<Failure, List<ProductDM>>> getProductsOfCategory(
+      String id) async {
+    try {
+      Uri url = Uri.https(
+          EndPoints.baseUrl, EndPoints.products, {"category[in]": id});
+      Response response = await get(url);
+      Map json = jsonDecode(response.body);
+      ProductsResponse productsResponse = ProductsResponse.fromJson(json);
+      if (response.statusCode >= 200 &&
+          response.statusCode < 300 &&
+          productsResponse.data?.isNotEmpty == true) {
+        return Right(productsResponse.data!);
+      } else {
+        return Left(Failure("something went wrong please tru again later"));
       }
+    } catch (error) {
+      return Left(Failure("something went wrong"));
+    }
   }
-
 }

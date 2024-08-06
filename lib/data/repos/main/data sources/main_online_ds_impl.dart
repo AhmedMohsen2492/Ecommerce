@@ -121,7 +121,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             "something went wrong please tru again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -141,7 +140,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             json["message"] ?? "something went wrong please tru again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -161,7 +159,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             json["message"] ?? "something went wrong please tru again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -184,7 +181,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             json["message"] ?? "something went wrong please tru again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -206,7 +202,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             "something went wrong please try again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -227,7 +222,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             json["message"] ?? "something went wrong please tru again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -248,7 +242,6 @@ class MainOnlineDsImpl extends MainOnlineDS {
             json["message"] ?? "something went wrong please try again later"));
       }
     } catch (e) {
-      print("Exception $e");
       return Left(Failure("something went wrong"));
     }
   }
@@ -261,12 +254,12 @@ class MainOnlineDsImpl extends MainOnlineDS {
       Uri url = Uri.https(EndPoints.baseUrl, EndPoints.updateMe);
       Response response = await put(url,
           headers: {"token": token},
-          body: {"name": "$name", "email": "$email", "phone": "01144028877"});
+          body: {"name": name, "email": email, "phone": "01144028877"});
 
       Map json = jsonDecode(response.body);
       AuthResponse userResponse = AuthResponse.fromJson(json);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Right(userResponse!);
+        return Right(userResponse);
       } else {
         return Left(Failure(userResponse.errors?["msg"] ??
             "something went wrong please tru again later"));
@@ -285,16 +278,16 @@ class MainOnlineDsImpl extends MainOnlineDS {
       Response response = await put(url, headers: {
         "token": token
       }, body: {
-        "currentPassword": "$currentPassword",
-        "password": "$newPassword",
-        "rePassword": "$newPassword"
+        "currentPassword": currentPassword,
+        "password": newPassword,
+        "rePassword": newPassword
       });
       Map json = jsonDecode(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(json);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         sharedPrefUtils.saveToken(authResponse.token!);
         sharedPrefUtils.saveUser(authResponse.user!);
-        return Right(authResponse!);
+        return Right(authResponse);
       } else {
         return Left(Failure(authResponse.errors?["msg"] ??
             "something went wrong please tru again later"));

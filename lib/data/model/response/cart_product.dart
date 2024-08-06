@@ -7,15 +7,17 @@ class CartProduct {
   num? price;
 
   CartProduct({
-      this.count, 
-      this.id, 
-      this.product, 
-      this.price,});
+    this.count,
+    this.id,
+    this.product,
+    this.price,
+  });
 
   CartProduct.fromJson(dynamic json) {
     count = json['count'];
     id = json['_id'];
-    product = json['product'] != null ? ProductDM.fromJson(json['product']) : null;
+    product =
+        json['product'] != null ? ProductDM.fromJson(json['product']) : null;
     price = json['price'];
   }
 

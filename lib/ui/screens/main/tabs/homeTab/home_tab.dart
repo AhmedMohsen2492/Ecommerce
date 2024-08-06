@@ -1,10 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerce_route/data/model/response/cart_dm.dart';
 import 'package:ecommerce_route/data/model/response/category_dm.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/domain/Di/di.dart';
-import 'package:ecommerce_route/ui/screens/main/main_screen_view_model.dart';
-import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_screen.dart';
 import 'package:ecommerce_route/ui/screens/productsOfCategory/products_of_category_view_model.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
@@ -18,6 +15,8 @@ import 'package:ecommerce_route/ui/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../main_screen_view_model.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -91,7 +90,7 @@ class _HomeTabState extends State<HomeTab> {
                   } else if (state is BaseErrorState) {
                     return ErrorView(state.errorMessage);
                   } else {
-                    return LoadingView();
+                    return const LoadingView();
                   }
                 },
               ),
@@ -114,7 +113,7 @@ class _HomeTabState extends State<HomeTab> {
                   } else if (state is BaseErrorState) {
                     return ErrorView(state.errorMessage);
                   } else {
-                    return LoadingView();
+                    return const LoadingView();
                   }
                 },
               ),

@@ -6,10 +6,11 @@ import '../../../data/model/response/product_dm.dart';
 
 @injectable
 class ProductsOfCategoryUseCase {
-  ProductsOfCategoryRepo productsOfCategoryRepo ;
+  ProductsOfCategoryRepo productsOfCategoryRepo;
+
   ProductsOfCategoryUseCase(this.productsOfCategoryRepo);
 
-  Future<Either<Failure, List<ProductDM>>> execute(String id){
+  Future<Either<Failure, List<ProductDM>>> execute(String id) {
     return productsOfCategoryRepo.getProductsOfCategory(id);
   }
 }

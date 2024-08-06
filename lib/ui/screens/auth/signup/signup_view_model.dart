@@ -8,34 +8,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class SignUpViewModel extends Cubit{
+class SignUpViewModel extends Cubit {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isPassword = true;
-  SignUpUseCase signUpUseCase ;
+  SignUpUseCase signUpUseCase;
 
-  SignUpViewModel(this.signUpUseCase):super(BaseInitialState());
+  SignUpViewModel(this.signUpUseCase) : super(BaseInitialState());
 
   void showPassword() {
     isPassword = !isPassword;
     emit(ShowPass());
   }
 
-  void signUp() async{
+  void signUp() async {
     if (formKey.currentState!.validate()) {
       emit(BaseLoadingState());
       RegisterRequestBody requestBody = RegisterRequestBody(
-        email: emailController.text,
-        name: nameController.text,
-        password: passwordController.text,
-        phone: mobileController.text,
-        rePassword: passwordController.text
-      );
+          email: emailController.text,
+          name: nameController.text,
+          password: passwordController.text,
+          phone: mobileController.text,
+          rePassword: passwordController.text);
 
-      Either<Failure,bool>  response = await signUpUseCase.execute(requestBody);
+      Either<Failure, bool> response = await signUpUseCase.execute(requestBody);
 
       response.fold((error) {
         emit(BaseErrorState(error.errorMessage));

@@ -1,14 +1,11 @@
 import 'package:ecommerce_route/data/utils/sharedpref_utils.dart';
-import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/categoryTab/category_tab.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/favouriteTab/fav_tab.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/homeTab/home_tab.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/userTab/user_tab.dart';
-import 'package:ecommerce_route/ui/utils/base_states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../data/model/response/AuthResponse.dart';
 import '../../../domain/use cases/mainUseCases/get_all_brands_usecase.dart';
 import '../../../domain/use cases/mainUseCases/get_all_categories_usecase.dart';
 import '../../../domain/use cases/mainUseCases/get_all_products_usecase.dart';
@@ -16,27 +13,34 @@ import '../../../domain/use cases/mainUseCases/get_products_from_specific_brand_
 
 @injectable
 class MainScreenViewModel extends Cubit {
-  MainScreenViewModel(this.getAllCategoriesUseCase, this.getAllProductsUseCase,this.getProductsFromSpecificBrandUseCase
-      ,this.getAllBrandsUseCase,this.sharedPrefUtils): super(MainScreenInitialState());
+  MainScreenViewModel(
+      this.getAllCategoriesUseCase,
+      this.getAllProductsUseCase,
+      this.getProductsFromSpecificBrandUseCase,
+      this.getAllBrandsUseCase,
+      this.sharedPrefUtils)
+      : super(MainScreenInitialState());
 
   int currentIndex = 0;
-  List<Widget> tabs = [HomeTab(), CategoryTab(), FavouritesTab(), UserTab()];
-  GetAllCategoriesUseCase getAllCategoriesUseCase ;
-  GetAllProductsUseCase getAllProductsUseCase ;
+  List<Widget> tabs = [const HomeTab(), CategoryTab(), FavouritesTab(), UserTab()];
+  GetAllCategoriesUseCase getAllCategoriesUseCase;
+
+  GetAllProductsUseCase getAllProductsUseCase;
+
   GetAllBrandsUseCase getAllBrandsUseCase;
   GetProductsFromSpecificBrandUseCase getProductsFromSpecificBrandUseCase;
-  SharedPrefUtils sharedPrefUtils ;
+  SharedPrefUtils sharedPrefUtils;
 
-  set currentTab(int newIndex){
+  set currentTab(int newIndex) {
     currentIndex = newIndex;
     emit(MainScreenInitialState());
   }
 
-  void loadCategories(){
+  void loadCategories() {
     getAllCategoriesUseCase.execute();
   }
 
-  void loadProducts(){
+  void loadProducts() {
     getAllProductsUseCase.execute();
   }
 
@@ -44,11 +48,9 @@ class MainScreenViewModel extends Cubit {
     getAllBrandsUseCase.execute();
   }
 
-  void loadProductsFromSpecificBrand(String id) async{
+  void loadProductsFromSpecificBrand(String id) async {
     getProductsFromSpecificBrandUseCase.execute(id);
   }
-
 }
 
 class MainScreenInitialState {}
-

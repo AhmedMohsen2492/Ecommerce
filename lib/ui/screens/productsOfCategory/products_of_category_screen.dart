@@ -28,7 +28,6 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   ProductsOfCategoryViewModel viewModel = getIt();
   CategoryDM? category;
 
-
   @override
   void initState() {
     super.initState();
@@ -42,7 +41,7 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   Widget build(BuildContext context) {
     category = ModalRoute.of(context)!.settings.arguments as CategoryDM?;
     CartViewModel cartViewModel = BlocProvider.of(context);
-    WishListViewModel wishListViewModel =  BlocProvider.of(context);
+    WishListViewModel wishListViewModel = BlocProvider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,34 +59,36 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
           bloc: viewModel,
           builder: (context, state) {
             if (state is BaseSuccessState<List<ProductDM>>) {
-              return BlocBuilder<CartViewModel,dynamic>(
+              return BlocBuilder<CartViewModel, dynamic>(
                 builder: (context, cartState) {
                   return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, childAspectRatio: 0.8),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 0.8),
                     itemCount: state.data!.length,
                     itemBuilder: (context, index) {
                       CartDM? cartDM = cartViewModel.cartDM;
                       List<ProductDM>? wishList = wishListViewModel.wishListDM;
                       var product = state.data?[index];
-                      bool isInCart = false ;
-                      bool isInWishList = false ;
-                      if(cartDM!=null && cartDM.products!=null){
-                        var productsInCart = cartDM?.products;
-                        for(int i=0 ; i < productsInCart!.length ; i++){
-                          if(product?.id == productsInCart[i].product?.id){
+                      bool isInCart = false;
+                      bool isInWishList = false;
+                      if (cartDM != null && cartDM.products != null) {
+                        var productsInCart = cartDM.products;
+                        for (int i = 0; i < productsInCart!.length; i++) {
+                          if (product?.id == productsInCart[i].product?.id) {
                             isInCart = true;
                           }
                         }
                       }
-                      if(wishList!=null){
-                        for(int i=0 ; i < wishList!.length ; i++){
-                          if(product?.id == wishList[i].id){
+                      if (wishList != null) {
+                        for (int i = 0; i < wishList.length; i++) {
+                          if (product?.id == wishList[i].id) {
                             isInWishList = true;
                           }
                         }
                       }
-                      return ProductItem(state.data![index],isInCart,isInWishList);
+                      return ProductItem(
+                          state.data![index], isInCart, isInWishList);
                     },
                   );
                 },
@@ -112,7 +113,7 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
                 ],
               );
             } else {
-              return LoadingView();
+              return const LoadingView();
             }
           },
         ),

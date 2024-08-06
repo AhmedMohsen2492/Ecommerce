@@ -7,10 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetAllProductsUseCase extends Cubit{
+class GetAllProductsUseCase extends Cubit {
   MainRepo repo;
 
-  GetAllProductsUseCase(this.repo):super(BaseInitialState());
+  GetAllProductsUseCase(this.repo) : super(BaseInitialState());
 
   void execute() async {
     Either<Failure, List<ProductDM>> either = await repo.getProducts();

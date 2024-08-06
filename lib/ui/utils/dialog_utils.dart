@@ -17,8 +17,8 @@ void showLoading(BuildContext context) {
                 fontSize: 18,
               ),
             ),
-            Spacer(),
-            CircularProgressIndicator(
+            const Spacer(),
+            const CircularProgressIndicator(
               color: AppColors.primary,
               strokeAlign: 0.02,
             ),

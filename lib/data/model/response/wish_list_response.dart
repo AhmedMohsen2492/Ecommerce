@@ -1,15 +1,16 @@
 import 'package:ecommerce_route/data/model/response/base_response.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 
-class WishListResponse extends BaseResponse{
+class WishListResponse extends BaseResponse {
   String? status;
   num? count;
   List<ProductDM>? data;
 
   WishListResponse({
-      this.status, 
-      this.count, 
-      this.data,});
+    this.status,
+    this.count,
+    this.data,
+  });
 
   WishListResponse.fromJson(dynamic json) {
     message = json['message'];

@@ -7,9 +7,10 @@ import '../../../data/model/response/cart_dm.dart';
 @injectable
 class AddProductToCartUseCase {
   MainRepo mainRepo;
+
   AddProductToCartUseCase(this.mainRepo);
 
-  Future<Either<Failure,CartDM>> execute(String id){
+  Future<Either<Failure, CartDM>> execute(String id) {
     return mainRepo.addProductToCart(id);
   }
 }

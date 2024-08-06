@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
 import 'package:ecommerce_route/ui/screens/cart/cart_screen.dart';
@@ -13,10 +14,11 @@ import 'domain/Di/di.dart';
 
 void main() {
   configureDependencies();
-  runApp(MultiBlocProvider(providers: [
-    BlocProvider(create: (context) => getIt<CartViewModel>()),
-    BlocProvider(create: (context) => getIt<WishListViewModel>()),
-  ], child: const MyApp()));
+  runApp(
+      MultiBlocProvider(providers: [
+          BlocProvider(create: (context) => getIt<CartViewModel>()),
+          BlocProvider(create: (context) => getIt<WishListViewModel>()),
+        ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,13 +30,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: {
-        SplashScreen.routeName: (_) => SplashScreen(),
-        LoginScreen.routeName: (_) => LoginScreen(),
+        SplashScreen.routeName: (_) => const SplashScreen(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
         SignUpScreen.routeName: (_) => SignUpScreen(),
-        MainScreen.routeName: (_) => MainScreen(),
-        ProductsOfCategoryScreen.routeName: (_) => ProductsOfCategoryScreen(),
-        ProductDetails.routeName: (_) => ProductDetails(),
-        CartScreen.routeName: (_) => CartScreen(),
+        MainScreen.routeName: (_) => const MainScreen(),
+        ProductsOfCategoryScreen.routeName: (_) =>
+            const ProductsOfCategoryScreen(),
+        ProductDetails.routeName: (_) => const ProductDetails(),
+        CartScreen.routeName: (_) => const CartScreen(),
       },
     );
   }

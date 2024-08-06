@@ -7,15 +7,15 @@ import 'package:ecommerce_route/domain/repos/productsDetails/products_details_re
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ProductDetailsRepo)
-class ProductDetailsRepoImpl extends ProductDetailsRepo{
-  ProductDetailsDS productDetailsDS ;
+class ProductDetailsRepoImpl extends ProductDetailsRepo {
+  ProductDetailsDS productDetailsDS;
 
   ProductDetailsRepoImpl(this.productDetailsDS);
 
   @override
-  Future<Either<Failure, ProductDM>> getSpecificProduct(String id) async{
+  Future<Either<Failure, ProductDM>> getSpecificProduct(String id) async {
     final List<ConnectivityResult> connectivityResult =
-    await (Connectivity().checkConnectivity());
+        await (Connectivity().checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       return productDetailsDS.getSpecificProduct(id);
@@ -23,5 +23,4 @@ class ProductDetailsRepoImpl extends ProductDetailsRepo{
       return Left(Failure("no internet connection"));
     }
   }
-
 }

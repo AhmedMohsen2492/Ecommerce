@@ -7,20 +7,20 @@ import 'package:injectable/injectable.dart';
 import '../../../domain/use cases/productsOfCategoryUseCase/products_of_category_use_case.dart';
 
 @injectable
-class ProductsOfCategoryViewModel extends Cubit{
-  ProductsOfCategoryUseCase productsOfCategoryUseCase ;
+class ProductsOfCategoryViewModel extends Cubit {
+  ProductsOfCategoryUseCase productsOfCategoryUseCase;
 
-  ProductsOfCategoryViewModel(this.productsOfCategoryUseCase):super(BaseInitialState());
+  ProductsOfCategoryViewModel(this.productsOfCategoryUseCase)
+      : super(BaseInitialState());
 
-  void loadProductsOfCategory(String id) async{
+  void loadProductsOfCategory(String id) async {
     emit(BaseLoadingState());
-    Either<Failure,List<ProductDM>> either = await productsOfCategoryUseCase.execute(id);
+    Either<Failure, List<ProductDM>> either =
+        await productsOfCategoryUseCase.execute(id);
     either.fold((error) {
       emit(BaseErrorState(error.errorMessage));
-    } , (success) {
-      emit(BaseSuccessState<List<ProductDM>>(
-        data: success
-      ));
+    }, (success) {
+      emit(BaseSuccessState<List<ProductDM>>(data: success));
     });
   }
 }

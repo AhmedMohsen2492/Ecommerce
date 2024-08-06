@@ -30,7 +30,7 @@ class SharedPrefUtils {
     return prefs.getString('token');
   }
 
-  void deleteUser() async{
+  void deleteUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }

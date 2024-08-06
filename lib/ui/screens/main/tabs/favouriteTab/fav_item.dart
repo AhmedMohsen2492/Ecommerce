@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_route/data/model/response/product_dm.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/wish_list_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../shared view models/cart_view_model.dart';
@@ -12,8 +10,9 @@ import '../../../../utils/app_colors.dart';
 
 class FavouriteItem extends StatelessWidget {
   ProductDM? favProduct;
-  final isInCart;
-  FavouriteItem(this.favProduct, this.isInCart);
+  final bool isInCart;
+
+  FavouriteItem(this.favProduct, this.isInCart, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +35,27 @@ class FavouriteItem extends StatelessWidget {
             child: CachedNetworkImage(
                 imageUrl: favProduct?.imageCover ?? "",
                 imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.primary.withOpacity(0.3),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.primary.withOpacity(0.3),
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
                 progressIndicatorBuilder: (_, __, ___) => const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  ),
-                ),
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    ),
                 errorWidget: (_, __, ___) => const Center(
-                  child: Icon(Icons.error),
-                )),
+                      child: Icon(Icons.error),
+                    )),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Expanded(
@@ -70,7 +69,7 @@ class FavouriteItem extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * 0.35,
-                        child: Text("${favProduct?.title ?? ""}",
+                        child: Text(favProduct?.title ?? "",
                             maxLines: 1,
                             style: GoogleFonts.poppins(
                               color: AppColors.darkBlue,
@@ -78,10 +77,11 @@ class FavouriteItem extends StatelessWidget {
                               fontSize: 16,
                             )),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       InkWell(
                         onTap: () {
-                          wishListViewModel.removeProductFromWishList(favProduct!.id!, context);
+                          wishListViewModel.removeProductFromWishList(
+                              favProduct!.id!, context);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(6),
@@ -94,8 +94,8 @@ class FavouriteItem extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 1,
                                 blurRadius: 1,
-                                offset:
-                                Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -107,13 +107,13 @@ class FavouriteItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text("${favProduct?.brand?.name ?? ""}",
+                Text(favProduct?.brand?.name ?? "",
                     style: GoogleFonts.poppins(
                       color: AppColors.darkBlue,
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
                     )),
-                Container(
+                SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.05,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,14 +131,18 @@ class FavouriteItem extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          if(isInCart){
-                            cartViewModel.removeProductFromCart(favProduct!.id!,context);
-                          }else{
-                            cartViewModel.addProductToCart(favProduct!.id!,context);
+                          if (isInCart) {
+                            cartViewModel.removeProductFromCart(
+                                favProduct!.id!, context);
+                          } else {
+                            cartViewModel.addProductToCart(
+                                favProduct!.id!, context);
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 10,),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
                             backgroundColor: AppColors.primary,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),

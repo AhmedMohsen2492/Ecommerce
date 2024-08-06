@@ -10,13 +10,14 @@ class CartDM {
   num? totalCartPrice;
 
   CartDM({
-      this.id, 
-      this.cartOwner, 
-      this.products, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.v, 
-      this.totalCartPrice,});
+    this.id,
+    this.cartOwner,
+    this.products,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.totalCartPrice,
+  });
 
   CartDM.fromJson(dynamic json) {
     id = json['_id'];

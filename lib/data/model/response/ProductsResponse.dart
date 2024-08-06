@@ -2,20 +2,22 @@ import 'package:ecommerce_route/data/model/response/base_response.dart';
 import 'Metadata.dart';
 import 'product_dm.dart';
 
-class ProductsResponse extends BaseResponse{
+class ProductsResponse extends BaseResponse {
   num? results;
   Metadata? metadata;
   List<ProductDM>? data;
 
   ProductsResponse({
-      this.results, 
-      this.metadata, 
-      this.data,});
+    this.results,
+    this.metadata,
+    this.data,
+  });
 
   ProductsResponse.fromJson(dynamic json) {
     results = json['results'];
     message = json['message'];
-    metadata = json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
+    metadata =
+        json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {

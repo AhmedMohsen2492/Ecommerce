@@ -6,10 +6,11 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class SignUpUseCase {
-  AuthRepo repo ;
+  AuthRepo repo;
+
   SignUpUseCase(this.repo);
 
-  Future<Either<Failure,bool>> execute(RegisterRequestBody body){
+  Future<Either<Failure, bool>> execute(RegisterRequestBody body) {
     return repo.register(body);
   }
 }

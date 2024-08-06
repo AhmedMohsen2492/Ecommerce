@@ -3,7 +3,8 @@ class BaseInitialState {}
 class BaseLoadingState {}
 
 class BaseSuccessState<Type> {
-  Type? data ;
+  Type? data;
+
   BaseSuccessState({this.data});
 }
 
@@ -13,4 +14,4 @@ class BaseErrorState {
   BaseErrorState(this.errorMessage);
 }
 
-class ShowPass{}
+class ShowPass {}

@@ -1,17 +1,14 @@
 import 'package:ecommerce_route/domain/Di/di.dart';
 import 'package:ecommerce_route/ui/screens/main/tabs/userTab/user_view_model.dart';
 import 'package:ecommerce_route/ui/utils/app_colors.dart';
-import 'package:ecommerce_route/ui/utils/base_states.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/success_alert.dart';
 
 class UserTab extends StatefulWidget {
-  UserTab({super.key});
+  const UserTab({super.key});
 
   @override
   State<UserTab> createState() => _UserTabState();
@@ -33,7 +30,7 @@ class _UserTabState extends State<UserTab> {
       child: BlocConsumer(
         bloc: viewModel,
         listener: (context, state) {
-          if(state is UserSuccessState){
+          if (state is UserSuccessState) {
             SuccessAlert.showSuccessAlert(
                 context: context,
                 title: "Success",
@@ -44,20 +41,17 @@ class _UserTabState extends State<UserTab> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary
-                    ),
+                        backgroundColor: AppColors.primary),
                     child: Text(
                       "Ok",
                       style: GoogleFonts.poppins(
                           color: AppColors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.w400
-                      ),
+                          fontWeight: FontWeight.w400),
                     ),
                   )
-                ]
-            );
-          }else if(state is UserErrorState){
+                ]);
+          } else if (state is UserErrorState) {
             MyErrorWidget.showError(
                 context: context,
                 errorTitle: "Error",
@@ -68,19 +62,16 @@ class _UserTabState extends State<UserTab> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary
-                    ),
+                        backgroundColor: AppColors.primary),
                     child: Text(
                       "Ok",
                       style: GoogleFonts.poppins(
                           color: AppColors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.w400
-                      ),
+                          fontWeight: FontWeight.w400),
                     ),
                   )
-                ]
-            );
+                ]);
           }
         },
         builder: (context, state) {
@@ -100,7 +91,7 @@ class _UserTabState extends State<UserTab> {
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("Full name",
@@ -108,7 +99,7 @@ class _UserTabState extends State<UserTab> {
                         color: AppColors.darkBlue,
                         fontWeight: FontWeight.w500,
                         fontSize: 16)),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 TextFormField(
@@ -125,7 +116,7 @@ class _UserTabState extends State<UserTab> {
                         color: AppColors.primary.withOpacity(0.4),
                         fontSize: 12,
                         fontWeight: FontWeight.w500),
-                    contentPadding: EdgeInsets.all(14),
+                    contentPadding: const EdgeInsets.all(14),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide(
@@ -158,7 +149,7 @@ class _UserTabState extends State<UserTab> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("E-mail",
@@ -166,7 +157,7 @@ class _UserTabState extends State<UserTab> {
                         color: AppColors.darkBlue,
                         fontWeight: FontWeight.w500,
                         fontSize: 16)),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 TextFormField(
@@ -177,7 +168,7 @@ class _UserTabState extends State<UserTab> {
                       fontSize: 14),
                   decoration: InputDecoration(
                     filled: true,
-                    contentPadding: EdgeInsets.all(14),
+                    contentPadding: const EdgeInsets.all(14),
                     fillColor: AppColors.white,
                     hintText: viewModel.currentUser?.email ?? "",
                     hintStyle: TextStyle(
@@ -216,14 +207,15 @@ class _UserTabState extends State<UserTab> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      viewModel.updateUserData(viewModel.nameController.text,viewModel.emailController.text,context);
+                      viewModel.updateUserData(viewModel.nameController.text,
+                          viewModel.emailController.text, context);
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
@@ -238,7 +230,7 @@ class _UserTabState extends State<UserTab> {
                             fontWeight: FontWeight.w500)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text("Current password",
@@ -246,7 +238,7 @@ class _UserTabState extends State<UserTab> {
                         color: AppColors.darkBlue,
                         fontWeight: FontWeight.w500,
                         fontSize: 16)),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 TextFormField(
@@ -257,7 +249,7 @@ class _UserTabState extends State<UserTab> {
                       fontWeight: FontWeight.w500,
                       fontSize: 12),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(14),
+                    contentPadding: const EdgeInsets.all(14),
                     filled: true,
                     fillColor: AppColors.white,
                     hintText: "current password",
@@ -268,8 +260,8 @@ class _UserTabState extends State<UserTab> {
                     suffixIcon: InkWell(
                       onTap: () {
                         viewModel.changeOldPassVisibility();
-                        },
-                      child: Icon(
+                      },
+                      child: const Icon(
                         Icons.visibility,
                         color: AppColors.primary,
                         size: 20,
@@ -307,7 +299,7 @@ class _UserTabState extends State<UserTab> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("New password",
@@ -315,7 +307,7 @@ class _UserTabState extends State<UserTab> {
                         color: AppColors.darkBlue,
                         fontWeight: FontWeight.w500,
                         fontSize: 16)),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 TextFormField(
@@ -326,7 +318,7 @@ class _UserTabState extends State<UserTab> {
                       fontWeight: FontWeight.w500,
                       fontSize: 12),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(14),
+                    contentPadding: const EdgeInsets.all(14),
                     filled: true,
                     fillColor: AppColors.white,
                     hintText: "new password",
@@ -338,7 +330,7 @@ class _UserTabState extends State<UserTab> {
                       onTap: () {
                         viewModel.changeNewPassVisibility();
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.visibility,
                         color: AppColors.primary,
                         size: 20,
@@ -376,15 +368,17 @@ class _UserTabState extends State<UserTab> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: () {
-                      viewModel.changePassword(viewModel.currentPasswordController.text,
-                          viewModel.newPasswordController.text, context);
+                      viewModel.changePassword(
+                          viewModel.currentPasswordController.text,
+                          viewModel.newPasswordController.text,
+                          context);
                     },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
@@ -399,7 +393,7 @@ class _UserTabState extends State<UserTab> {
                             fontWeight: FontWeight.w500)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
@@ -414,11 +408,11 @@ class _UserTabState extends State<UserTab> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.logout,
                         color: AppColors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text("Log out",

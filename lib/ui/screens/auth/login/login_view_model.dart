@@ -16,11 +16,12 @@ class LoginViewModel extends Cubit {
 
   LoginViewModel(this.loginUseCase) : super(BaseInitialState());
 
-  void login()async{
+  void login() async {
     if (formKey.currentState!.validate()) {
       emit(BaseLoadingState());
 
-      Either<Failure,bool>  response = await loginUseCase.execute(emailController.text, passwordController.text);
+      Either<Failure, bool> response = await loginUseCase.execute(
+          emailController.text, passwordController.text);
 
       response.fold((error) {
         emit(BaseErrorState(error.errorMessage));
@@ -30,7 +31,7 @@ class LoginViewModel extends Cubit {
     }
   }
 
-  void showPassword(){
+  void showPassword() {
     isPassword = !isPassword;
     emit(ShowPass());
   }

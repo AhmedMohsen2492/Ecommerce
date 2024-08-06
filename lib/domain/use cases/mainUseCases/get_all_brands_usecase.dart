@@ -10,9 +10,9 @@ import 'package:injectable/injectable.dart';
 class GetAllBrandsUseCase extends Cubit {
   MainRepo repo;
 
-  GetAllBrandsUseCase(this.repo):super(BaseInitialState());
+  GetAllBrandsUseCase(this.repo) : super(BaseInitialState());
 
-  void execute() async{
+  void execute() async {
     emit(BaseLoadingState());
     Either<Failure, List<CategoryDM>> either = await repo.getBrands();
     either.fold((error) {
@@ -20,6 +20,5 @@ class GetAllBrandsUseCase extends Cubit {
     }, (success) {
       emit(BaseSuccessState<List<CategoryDM>>(data: success));
     });
-
   }
 }

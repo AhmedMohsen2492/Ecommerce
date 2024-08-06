@@ -19,22 +19,23 @@ class ProductDM {
   String? updatedAt;
 
   ProductDM({
-      this.sold, 
-      this.images, 
-      this.subcategory, 
-      this.ratingsQuantity, 
-      this.id, 
-      this.title, 
-      this.slug, 
-      this.description, 
-      this.quantity, 
-      this.price, 
-      this.imageCover, 
-      this.category, 
-      this.brand, 
-      this.ratingsAverage, 
-      this.createdAt, 
-      this.updatedAt,});
+    this.sold,
+    this.images,
+    this.subcategory,
+    this.ratingsQuantity,
+    this.id,
+    this.title,
+    this.slug,
+    this.description,
+    this.quantity,
+    this.price,
+    this.imageCover,
+    this.category,
+    this.brand,
+    this.ratingsAverage,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   ProductDM.fromJson(dynamic json) {
     sold = json['sold'];
@@ -53,14 +54,14 @@ class ProductDM {
     quantity = json['quantity'];
     price = json['price'];
     imageCover = json['imageCover'];
-    category = json['category'] != null ? CategoryDM.fromJson(json['category']) : null;
+    category =
+        json['category'] != null ? CategoryDM.fromJson(json['category']) : null;
     brand = json['brand'] != null ? CategoryDM.fromJson(json['brand']) : null;
     ratingsAverage = json['ratingsAverage'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
   }
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -89,5 +90,4 @@ class ProductDM {
     map['id'] = id;
     return map;
   }
-
 }

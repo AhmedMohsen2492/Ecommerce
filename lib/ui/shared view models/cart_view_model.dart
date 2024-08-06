@@ -19,56 +19,57 @@ class CartViewModel extends Cubit {
   AddProductToCartUseCase addProductToCartUseCase;
   RemoveProductFromCartUseCase removeProductFromCartUseCase;
   UpdateCartProductQuantityUseCase updateCartProductQuantityUseCase;
-  CartDM? cartDM ;
+  CartDM? cartDM;
 
   CartViewModel(this.getLoggedUserCartUseCase, this.addProductToCartUseCase,
-      this.removeProductFromCartUseCase,this.updateCartProductQuantityUseCase)
+      this.removeProductFromCartUseCase, this.updateCartProductQuantityUseCase)
       : super(BaseInitialState());
 
-  void addProductToCart(String id,BuildContext context) async{
+  void addProductToCart(String id, BuildContext context) async {
     showLoading(context);
-    Either either  = await addProductToCartUseCase.execute(id);
-    either.fold((error){
+    Either either = await addProductToCartUseCase.execute(id);
+    either.fold((error) {
       emit(BaseErrorState(error));
-    }, (cart){
+    }, (cart) {
       cartDM = cart;
       emit(BaseSuccessState());
       hideLoading(context);
     });
   }
 
-  void removeProductFromCart(String id,BuildContext context) async{
+  void removeProductFromCart(String id, BuildContext context) async {
     showLoading(context);
-    Either either  = await removeProductFromCartUseCase.execute(id);
-    either.fold((error){
+    Either either = await removeProductFromCartUseCase.execute(id);
+    either.fold((error) {
       emit(BaseErrorState(error));
-    }, (cart){
+    }, (cart) {
       cartDM = cart;
       emit(BaseSuccessState());
       hideLoading(context);
     });
   }
 
-  void loadCart() async{
-    Either<Failure,CartDM> either  = await getLoggedUserCartUseCase.execute();
-    either.fold((error){
+  void loadCart() async {
+    Either<Failure, CartDM> either = await getLoggedUserCartUseCase.execute();
+    either.fold((error) {
       emit(BaseErrorState(error.errorMessage));
-    }, (cart){
+    }, (cart) {
       cartDM = cart;
       emit(BaseSuccessState());
     });
   }
 
-  void updateCartProductQuantity(String id, num quantity,BuildContext context) async{
-    if(quantity<=0) {
-      return ;
-    }else
-      {
+  void updateCartProductQuantity(
+      String id, num quantity, BuildContext context) async {
+    if (quantity <= 0) {
+      return;
+    } else {
       showLoading(context);
-      Either either  = await updateCartProductQuantityUseCase.execute(id,quantity);
-      either.fold((error){
+      Either either =
+          await updateCartProductQuantityUseCase.execute(id, quantity);
+      either.fold((error) {
         emit(BaseErrorState(error));
-      }, (cart){
+      }, (cart) {
         cartDM = cart;
         emit(BaseSuccessState());
         hideLoading(context);
@@ -76,13 +77,12 @@ class CartViewModel extends Cubit {
     }
   }
 
-  CartProduct? isInCart(ProductDM? product){
+  CartProduct? isInCart(ProductDM? product) {
     var productsInCart = cartDM?.products;
     if (cartDM != null && productsInCart != null) {
-      for (int i = 0; i < productsInCart!.length; i++)
-      {
+      for (int i = 0; i < productsInCart.length; i++) {
         if (product?.id == productsInCart[i].product?.id) {
-          return productsInCart[i] ;
+          return productsInCart[i];
         }
       }
     }

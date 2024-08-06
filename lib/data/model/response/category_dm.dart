@@ -9,12 +9,13 @@ class CategoryDM {
   String? category;
 
   CategoryDM({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.image, 
-      this.createdAt, 
-      this.updatedAt,});
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   CategoryDM.fromJson(dynamic json) {
     id = json['_id'];

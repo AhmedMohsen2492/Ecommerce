@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared view models/cart_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-  static const String routeName = "splash" ;
+  const SplashScreen({super.key});
+  static const String routeName = "splash";
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -20,26 +20,22 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    CartViewModel cartViewModel =  BlocProvider.of(context);
+    CartViewModel cartViewModel = BlocProvider.of(context);
     WishListViewModel wishListViewModel = BlocProvider.of(context);
     wishListViewModel.loadWishList();
     cartViewModel.loadCart();
     super.initState();
     Future.delayed(
-        Duration(seconds: 3),
+      const Duration(seconds: 3),
       () async {
-          var pref = getIt<SharedPrefUtils>();
-          User? user = await pref.getUser();
-          String? s = await  pref.getToken();
-          print("TOKEN =  $s");
-          if(user == null)
-            {
-              Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-            }
-          else{
-            Navigator.pushReplacementNamed(context, MainScreen.routeName);
-          }
-      } ,
+        var pref = getIt<SharedPrefUtils>();
+        User? user = await pref.getUser();
+        if (user == null) {
+          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+        } else {
+          Navigator.pushReplacementNamed(context, MainScreen.routeName);
+        }
+      },
     );
   }
 
@@ -47,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Image.asset(
-          AppAssets.splashScreen,
+        AppAssets.splashScreen,
         width: double.infinity,
         fit: BoxFit.cover,
       ),
