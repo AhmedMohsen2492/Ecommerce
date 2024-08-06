@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:ecommerce_route/ui/screens/auth/login/login_screen.dart';
 import 'package:ecommerce_route/ui/screens/auth/signup/signup_screen.dart';
 import 'package:ecommerce_route/ui/screens/cart/cart_screen.dart';
