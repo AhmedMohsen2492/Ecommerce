@@ -34,7 +34,7 @@ class AuthRepoImpl extends AuthRepo {
         sharedPrefUtils.saveToken(authResponse.token!);
         return const Right(true);
       } else {
-        return Left(Failure(authResponse.message ?? "something went wrong"));
+        return Left(Failure(authResponse.errors?["msg"] ?? authResponse.message));
       }
     } else {
       return Left(
@@ -60,7 +60,7 @@ class AuthRepoImpl extends AuthRepo {
         sharedPrefUtils.saveToken(authResponse.token!);
         return const Right(true);
       } else {
-        return Left(Failure(authResponse.message ?? "something went wrong"));
+        return Left(Failure(authResponse.errors?["msg"] ?? authResponse.message));
       }
     } else {
       return Left(

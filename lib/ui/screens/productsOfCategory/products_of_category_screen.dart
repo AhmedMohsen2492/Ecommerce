@@ -9,10 +9,10 @@ import 'package:ecommerce_route/ui/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../data/model/response/cart_dm.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/loading_view.dart';
+import '../cart/cart_screen.dart';
 
 class ProductsOfCategoryScreen extends StatefulWidget {
   const ProductsOfCategoryScreen({super.key});
@@ -27,11 +27,16 @@ class ProductsOfCategoryScreen extends StatefulWidget {
 class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   ProductsOfCategoryViewModel viewModel = getIt();
   CategoryDM? category;
+  late CartViewModel cartViewModel;
+
+  late WishListViewModel wishListViewModel;
 
   @override
   void initState() {
     super.initState();
     viewModel = getIt();
+    cartViewModel = BlocProvider.of(context);
+    wishListViewModel = BlocProvider.of(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel.loadProductsOfCategory(category?.id ?? "");
     });
@@ -40,8 +45,6 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     category = ModalRoute.of(context)!.settings.arguments as CategoryDM?;
-    CartViewModel cartViewModel = BlocProvider.of(context);
-    WishListViewModel wishListViewModel = BlocProvider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +52,11 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
           children: [
             Text(category!.name!),
             const Spacer(),
-            Image.asset(AppAssets.shoppingIcon),
+            InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
+                child: Image.asset(AppAssets.shoppingIcon)),
           ],
         ),
       ),
@@ -67,26 +74,10 @@ class _ProductsOfCategoryScreenState extends State<ProductsOfCategoryScreen> {
                             crossAxisCount: 2, childAspectRatio: 0.8),
                     itemCount: state.data!.length,
                     itemBuilder: (context, index) {
-                      CartDM? cartDM = cartViewModel.cartDM;
-                      List<ProductDM>? wishList = wishListViewModel.wishListDM;
                       var product = state.data?[index];
-                      bool isInCart = false;
-                      bool isInWishList = false;
-                      if (cartDM != null && cartDM.products != null) {
-                        var productsInCart = cartDM.products;
-                        for (int i = 0; i < productsInCart!.length; i++) {
-                          if (product?.id == productsInCart[i].product?.id) {
-                            isInCart = true;
-                          }
-                        }
-                      }
-                      if (wishList != null) {
-                        for (int i = 0; i < wishList.length; i++) {
-                          if (product?.id == wishList[i].id) {
-                            isInWishList = true;
-                          }
-                        }
-                      }
+                      bool isInCart = cartViewModel.isInCart(product) != null;
+                      bool isInWishList =
+                          wishListViewModel.isInWishList(product!);
                       return ProductItem(
                           state.data![index], isInCart, isInWishList);
                     },

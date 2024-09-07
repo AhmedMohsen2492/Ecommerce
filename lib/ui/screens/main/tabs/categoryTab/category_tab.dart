@@ -24,11 +24,15 @@ class CategoryTab extends StatefulWidget {
 
 class _CategoryTabState extends State<CategoryTab> {
   MainScreenViewModel viewModel = getIt();
+  late CartViewModel cartViewModel ;
+  late WishListViewModel wishListViewModel;
 
   @override
   void initState() {
     super.initState();
     viewModel.loadBrands();
+    cartViewModel = BlocProvider.of(context);
+    wishListViewModel = BlocProvider.of(context);
   }
 
   @override
@@ -162,25 +166,9 @@ class _CategoryTabState extends State<CategoryTab> {
               return ListView.builder(
                 itemCount: brandState.data!.length,
                 itemBuilder: (context, index) {
-                  CartViewModel cartViewModel = BlocProvider.of(context);
-                  WishListViewModel wishListViewModel =
-                      BlocProvider.of(context);
-                  CartDM? cartDM = cartViewModel.cartDM;
-                  List<ProductDM>? wishList = wishListViewModel.wishListDM;
-                  var productsInCart = cartDM?.products;
                   var product = brandState.data?[index];
-                  bool isInCart = false;
-                  bool isInWishList = false;
-                  for (int i = 0; i < productsInCart!.length; i++) {
-                    if (productsInCart[i].product?.id == product?.id) {
-                      isInCart = true;
-                    }
-                  }
-                  for (int i = 0; i < wishList!.length; i++) {
-                    if (wishList[i].id == product?.id) {
-                      isInWishList = true;
-                    }
-                  }
+                  bool isInCart = cartViewModel.isInCart(product) != null ;
+                  bool isInWishList = wishListViewModel.isInWishList(product!);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ProductItem(product!, isInCart, isInWishList),

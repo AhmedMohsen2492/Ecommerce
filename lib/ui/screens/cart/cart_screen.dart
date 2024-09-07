@@ -2,7 +2,6 @@ import 'package:ecommerce_route/data/model/response/cart_product.dart';
 import 'package:ecommerce_route/ui/screens/cart/cart_item.dart';
 import 'package:ecommerce_route/ui/shared%20view%20models/cart_view_model.dart';
 import 'package:ecommerce_route/ui/utils/base_states.dart';
-import 'package:ecommerce_route/ui/widgets/error_view.dart';
 import 'package:ecommerce_route/ui/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -157,7 +156,41 @@ class _CartScreenState extends State<CartScreen> {
               );
             }
           } else if (state is BaseErrorState) {
-            return ErrorView(state.errorMessage);
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(AppAssets.empty_cart_image),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.03,
+                  ),
+                  Text(
+                    "Your cart is empty",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.01,
+                  ),
+                  Text(
+                    "Looks like you have not added anything to your cart.",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary.withOpacity(0.7)),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.08,
+                  ),
+                ],
+              ),
+            );
           } else {
             return const LoadingView();
           }

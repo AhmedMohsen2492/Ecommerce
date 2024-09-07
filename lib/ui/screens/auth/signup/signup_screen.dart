@@ -175,7 +175,10 @@ class SignUpScreen extends StatelessWidget {
               showLoading(context);
             } else if (state is BaseSuccessState) {
               Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, MainScreen.routeName);
+              Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
+
+              //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
+            //Navigator.pushReplacementNamed(context, MainScreen.routeName);
             } else if (state is BaseErrorState) {
               Navigator.pop(context);
               showErrorDialog(context, state.errorMessage);
