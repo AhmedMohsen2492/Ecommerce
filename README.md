@@ -1,16 +1,29 @@
-# ecommerce_route
+# E-Commerce App
 
-A new Flutter project.
+## Description
+The E-Commerce App is a mobile application built using Flutter that allows users to create an account, browse products, and manage their shopping experience seamlessly. Users can explore various categories and brands, view detailed product information, add items to their favorites and shopping cart, and edit their personal information.
 
-## Getting Started
+## Features
+1. User Registration and Profile: Users can create an account, manage personal information, and edit their profiles.
+2. Product Browsing: Users can explore a wide range of products organized by categories and brands.
+3. Product Details: Users can view detailed information about each product, including images, descriptions, prices, and specifications.
+4. Favorites: Users can add products to their favorites for easy access later.
+5. Shopping Cart: Users can add products to their cart, adjust quantities, and proceed to checkout.
+6. Secure Checkout: Users can make secure payments through integrated payment gateways.
 
-This project is a starting point for a Flutter application.
+## Technologies Used
+- Flutter
+- Dart
+- MVVM 
+- Cubit (for state management)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Screenshots
+<img src="screenshots/splash.png" width="200" height="400" />  <img src="screenshots/login.png" width="200" height="400" />  <img src="screenshots/signup.png" width="200" height="400" />  <img src="screenshots/user.png" width="200" height="400" />  <img src="screenshots/home.png" width="200" height="400" /> <img src="screenshots/category.png" width="200" height="400" /> <img src="screenshots/details.png" width="200" height="400" /> <img src="screenshots/brand.png" width="200" height="400" />  <img src="screenshots/cartempty.png" width="200" height="400" /> <img src="screenshots/cart.png" width="200" height="400" /> <img src="screenshots/favempty.png" width="200" height="400" />  <img src="screenshots/fav.png" width="200" height="400" /> 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Contact
+If you have any questions or feedback, please feel free to reach out to the project maintainers:
+- Ahmed Mohsen : ahmedmohsen2492@gmail.com
+
+
+
